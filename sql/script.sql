@@ -36,3 +36,44 @@ ordinal integer
 );
 
 
+
+--PASO QUE SE EJECUTARA EN LA PLACA
+CREATE TABLE step(
+id_step serial not null primary key,
+description text not null,
+id_status not null references status(id_status)
+);
+
+CREATE TABLE step_plaque(
+id_plaque primary key not null references plaque(id_plaque),
+id_step primary key not null references step(id_step),
+ordina integer not null
+);
+
+CREATE TABLE well(
+id_well serial not null primary key,
+row integer not null unique,
+column char not null unique
+);
+
+CREATE TABLE step_in_plaque_well(
+id_step primary key not null references step(id_step),
+id_plaque primary key not null references plaque(id_plaque),
+id_well primary key not null references well(id_well),
+id_status not null references status(id_status),
+quantity real
+);
+
+CREATE TABLE plaque_well(
+	id_plaque not null primary key references plaque(id_plaque),
+	id_well not null primary key references well(id_well)
+);
+
+CREATE TABLE step_type_plaque(
+	id_step primary key not null references step(id_step),
+	clock time
+);
+
+CREATE TABLE step_type_well(
+	id_step references step(id_step)
+);
