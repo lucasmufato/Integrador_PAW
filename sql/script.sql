@@ -77,3 +77,9 @@ CREATE TABLE step_type_plaque(
 CREATE TABLE step_type_well(
 	id_step references step(id_step)
 );
+
+
+INSERT INTO status
+('1', 'Finalizado'),
+('2', 'En Proceso'),
+('3', 'Iniciado');
