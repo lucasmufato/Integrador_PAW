@@ -3,10 +3,10 @@
 class DataBase{
     
     /*   esto podria sacarse de un archivo de configuracion   */
-    private $user="";
-    private $password="";
-    private $DBname="";
-    private $host="";
+    private $user="PAW";
+    private $password="mufina";
+    private $DBname="Inmunologia";
+    private $host="localhost";
     private $port=5432;
     
     public function __contruct(){
@@ -15,6 +15,9 @@ class DataBase{
     
     public function getConnection(){
          // se conecta a la BD y devuelve el objeto PDO
+        $pdo = new PDO("pgsql:host=$this->host;dbname=$this->DBname", $this->user, $this->password) or die("no me pude conectar a la BD");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo;
     }
     
 }
