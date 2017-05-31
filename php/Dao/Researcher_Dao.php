@@ -50,6 +50,7 @@ class ResearcherDao{
     		$query->bindParam(':birthday', $birthday);
 
     		return $query->execute();
+    		#hacer una devolucion de porque no se pudo almacenar en la base de datos
     	}
     
     }
