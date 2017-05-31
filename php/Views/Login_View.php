@@ -16,7 +16,7 @@
 </head>
 <body>
     <section>
-        <h1>Inicia sesion!</h1>
+        <h1>Iniciar Sesión</h1>
         <form id="login">
             <label for="">Nombre de Usuario</label>
             <input type="text" min="3" max="50" required="true">
