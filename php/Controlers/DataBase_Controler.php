@@ -3,7 +3,7 @@
 class DataBase{
     
     /*   esto podria sacarse de un archivo de configuracion   */
-    private $user="PAW";
+    private $user="lucria";
     private $password="mufina";
     private $DBname="Inmunologia";
     private $host="localhost";
