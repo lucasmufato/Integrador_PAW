@@ -3,7 +3,7 @@
 class DataBase{
     
     /*   esto podria sacarse de un archivo de configuracion   */
-    private $user="PAW";
+    private $user="lucira";
     private $password="mufina";
     private $DBname="Inmunologia";
     private $host="localhost";
@@ -21,3 +21,8 @@ class DataBase{
     }
     
 }
+/*
+$bd = new DataBase();
+echo"ddd";
+$bd->getConnection();
+*/
