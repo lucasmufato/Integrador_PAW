@@ -16,16 +16,25 @@ ingresar = function(){
     var data = $("#login").serialize();
     data = data + "&do=login";
     var funcion = function(data,status){
-        if(status === "success"){
-            alert(data);
-            //window.location("index_view.php");
-        }else{
-            alert("logeo incorrecto");
+        if(status !== "success"){
+            alert("No se pudo conectar con el servidor");
+            return;
         }
+        alert(data);
     };
     $.post(url,data,funcion);
 };
 
 registrarse = function(){
-    
+    console.log("apretaste el boton");
+    var data = $("#newResearcher").serialize();
+    data = data + "&do=newResearcher";
+    var funcion = function(data,status){
+        if(status !== "success"){
+            alert("No se pudo conectar con el servidor");
+            return;
+        }
+        alert(data);
+    };
+    $.post(url,data,funcion);
 };
