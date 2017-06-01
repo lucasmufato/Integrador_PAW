@@ -51,10 +51,12 @@ class ResearcherDao{
 
     		return $query->execute();
     		#hacer una devolucion de porque no se pudo almacenar en la base de datos
+    		#ver como capturar los constrains de a base de datos. rodear 
     	}
     
     }
 
+    #encargada de dar cierre de la correccion
     public function close(){
     	$this->connection = null;
     }
