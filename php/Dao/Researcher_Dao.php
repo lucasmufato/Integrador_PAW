@@ -1,11 +1,13 @@
 <?php
+include_once("../Controlers/DataBase_Controler.php");
 
 class ResearcherDao{
-	$connection = null;
+	protected $connection = null;
 
-    public function __contruct(){
-    	$this->connetion = new DataBase_Controler();
-    	$this->connetion = $this->getConnection();
+    public function __construct(){
+        // por alguna razon no 
+    	$bd = new DataBase();
+    	$this->connection = $bd->getConnection();
     }
 
     #devuelve todos los investigadores de la base
@@ -13,14 +15,14 @@ class ResearcherDao{
     
     }
     
-    public function validateResearcher($usarName, $password){
-    	if (! is_null($connetion)){
-    		$query = $connection->prepare(" SELECT COUNT(username) FROM researcher WHERE username = :username and pass = :password" );
+    public function validateResearcher($userName, $password){
+    	if (! is_null($this->connection)){
+    		$query = $this->connection->prepare(" SELECT COUNT(username) as c FROM researcher WHERE username = :username and pass = :password" );
     		$query->bindParam('username', $userName);
     		$query->bindParam('password', $password);
-    		if ($query) {
-    			$showResult = $query->fetch(PDO::FECTH_ASSOC);
-    			if($showResult == 1){
+    		if ($query->execute()) {
+    			$showResult = $query->fetch(PDO::FETCH_ASSOC);
+    			if($showResult["c"] == 1){
     				return true;
     			} else {
     				return false;
@@ -31,7 +33,7 @@ class ResearcherDao{
     
     #se encarga de persistir en la BD
     public function newResearcher($researcher){
-    	if(! is_null($conexion)){
+    	if(! is_null($this->connection)){
  
     		$name = $researcher->getName();
     		$surname = $researcher->getSurname();
