@@ -1,5 +1,9 @@
 ﻿-- create database Inmunologia
+<<<<<<< HEAD
+-- create role lucria password 'mufina';
+=======
 -- create role lucira password 'mufina';
+>>>>>>> 7d767a4264f51cb2773fd6317dedcebab97abbc2
 
 --TABLA DEL INVESTIGADOR
 CREATE TABLE researcher(
