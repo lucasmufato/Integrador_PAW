@@ -22,6 +22,8 @@ class DataBase{
     
 }
 /*
+PARA PROBAR LA CONEXION CON LA BD
+
 $bd = new DataBase();
 echo"ddd";
 $bd->getConnection();

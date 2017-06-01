@@ -16,4 +16,8 @@ class SessionControler{
     public function deleteSession(){
     
     }
+
+    public function getUserName(){
+    	
+    }
 }
