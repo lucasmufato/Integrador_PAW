@@ -30,7 +30,7 @@ class Login{
         if( isset( $_POST["pass2"] ) ){
             $pass2 = trim( $_POST["pass2"] );
         }
-        if()
+        
     }
     
     public function checkUserPass(){
