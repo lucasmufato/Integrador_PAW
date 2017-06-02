@@ -24,7 +24,7 @@ ingresar = function(){
         data = JSON.parse(data);
         switch (data.status){
             case "ok":
-                alert("loge exitoso");
+                window.location.href = "sesion_test_view.php";
                 break;
             case "wrong":
                 alert("usuario o contraseña incorrectas");

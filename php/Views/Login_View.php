@@ -1,17 +1,21 @@
 <?php
     //esta clase se encarga de checkear la sesion, y redirigir en caso que este logeado.
     include_once("../Controlers/Session_Controler.php");
+    $s = new SessionControler();
+    if(  $s->checkSession() ){
+        header('Location: '. "sesion_test_view.php");
+    }
     //si sigue por aca es q no esta logueado
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
     <link rel="stylesheet" href="../../css/login/login.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../../js/jquery-3.2.1.min.js"></script>
     <script src="../../js/login.js"></script>
     <!-- script para logearse con G+ -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>

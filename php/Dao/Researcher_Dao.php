@@ -16,6 +16,7 @@ class ResearcherDao{
     }
     
     public function validateResearcher($userName, $password){
+        //EL METODO DEBE DEVOLVER EL ID DEL USUARIO o NULL
     	if (! is_null($this->connection)){
     		$query = $this->connection->prepare(" SELECT COUNT(username) FROM researcher WHERE username = :username and pass = :password" );
     		$query->bindParam('username', $userName);
@@ -23,7 +24,7 @@ class ResearcherDao{
     		if ($query->execute()) {
     			$showResult = $query->fetchColumn();
                 if($showResult == 1){
-    				return true;
+    				return 1;
     			} else {
     				return false;
     			}

@@ -1,10 +1,11 @@
 <?php
 include_once("../Dao/Researcher_Dao.php");
 include_once("../Model/Researcher_Model.php");
+include_once("Session_Controler.php");
 
 class Login{
     
-    public function __contruct(){
+    public function __construct(){
     }
     
     public function newResearcher(){
@@ -49,10 +50,12 @@ class Login{
         $rta = $dao->validateResearcher($user,$pass);
         $dao->close();
         $serverResponse;
-        if($rta){
+        if( is_numeric($rta) ){
             $serverResponse =  array("status" => "ok");
+            $sesionControler = new SessionControler();
+            $sesionControler->newSession($rta);
         }else{
-            $serverResponse = array("status" => "wrong");
+            $serverResponse = array("status" => "wrong","errores"=>$rta);
         }
         echo json_encode($serverResponse);
     }
