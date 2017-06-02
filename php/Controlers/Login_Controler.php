@@ -24,7 +24,6 @@ class Login{
         }else{
             #creamos el nuevo researcher en base a los datos ingresados y que sean las claves iguales
             $researcher = new Researcher($name, $surname, $user, $pass1, $mail, $bday);
-            echo "r: " . $researcher->toString();
             #dao que controla la persistencia del modelo
             $dao = new ResearcherDao();
             
@@ -44,8 +43,10 @@ class Login{
     }
     
     public function checkUserPass(){
-        //$user = $_POST["l_user"];
-        //$pass = $_POST["l_pass"];
+
+        $user = trim( $_POST["l_user"] );
+        $pass = trim( $_POST["l_pass"] );
+
         $dao = new ResearcherDao();
         $rta = $dao->validateResearcher($user,$pass);
         $dao->close();
