@@ -44,8 +44,10 @@ class Login{
     }
     
     public function checkUserPass(){
+
         $user = trim( $_POST["l_user"] );
         $pass = trim( $_POST["l_pass"] );
+
         $dao = new ResearcherDao();
         $rta = $dao->validateResearcher($user,$pass);
         $dao->close();
