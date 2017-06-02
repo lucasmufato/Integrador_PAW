@@ -1,5 +1,6 @@
 <?php
 include_once("../Dao/Researcher_Dao.php");
+include_once("../Model/Researcher_Model.php");
 
 class Login{
     
@@ -7,7 +8,7 @@ class Login{
     }
     
     public function newResearcher(){
-        $name = $surname = $bday = $mail = $use = $pass1 = $pass2 = null;
+        $name = $surname = $bday = $mail = $user = $pass1 = $pass2 = null;
         $errores = [];
         if( isset( $_POST["name"] ) ){
             $name = trim( $_POST["name"] );
@@ -30,6 +31,26 @@ class Login{
         if( isset( $_POST["pass2"] ) ){
             $pass2 = trim( $_POST["pass2"] );
         }
+    
+       
+        if ($pass1 == $pass2){
+            #creamos el nuevo researcher en base a los datos ingresados y que sean las claves iguales
+            $researcher = new Researcher($name, $surname, $user, $pass1, $mail, $bday);
+
+            #dao que controla la persistencia del modelo
+            $dao = new ResearcherDao();
+            
+            $rta = $dao->newResearcher($this->researcher);
+
+            if ($rta){
+                echo "Se ha registrado un nuevo Investigador. Bienvenido!";
+            } else {
+                echo "Error..! Lo lamentamos, algo no salió bien :|";
+            }
+        } else {
+            echo "Error..! las claves no coinciden :|";
+        }
+        $dao->close();
         
     }
     
@@ -39,6 +60,7 @@ class Login{
         $dao = new ResearcherDao();
         $rta = $dao->validateResearcher($user,$pass);
         $dao->close();
+        echo $rta;
         if($rta){
             echo "logeo exitoso";
         }else{

@@ -1,5 +1,6 @@
 <?php
 include_once("../Controlers/DataBase_Controler.php");
+include_once("../Model/Researcher_Model.php");
 
 class ResearcherDao{
 	protected $connection = null;
@@ -17,12 +18,12 @@ class ResearcherDao{
     
     public function validateResearcher($userName, $password){
     	if (! is_null($this->connection)){
-    		$query = $this->connection->prepare(" SELECT COUNT(username) as c FROM researcher WHERE username = :username and pass = :password" );
+    		$query = $this->connection->prepare(" SELECT COUNT(username) FROM researcher WHERE username = :username and pass = :password" );
     		$query->bindParam('username', $userName);
     		$query->bindParam('password', $password);
     		if ($query->execute()) {
-    			$showResult = $query->fetch(PDO::FETCH_ASSOC);
-    			if($showResult["c"] == 1){
+    			$showResult = $query->fetchColumn();
+                if($showResult == 1){
     				return true;
     			} else {
     				return false;
@@ -35,14 +36,15 @@ class ResearcherDao{
     public function newResearcher($researcher){
     	if(! is_null($this->connection)){
  
-    		$name = $researcher->getName();
+    		$name = $this->researcher->getName();
+            echo '    mi nombre' . $name;
     		$surname = $researcher->getSurname();
-    		$username = $researcher->getUserName();
+    		$username = $researcher->getUser();
     		$pass = $researcher->getPassword();
     		$email = $researcher->getEmail();
     		$birthday = $researcher->getBirthday();
 
-    		$query = $connection->prepare("INSERT INTO researcher (name, surname, email, pass, username, birthday) VALUES (:name, :surname, :email, :pass, :username, :birthday)");
+    		/*$query = $this->connection->prepare("INSERT INTO researcher (name, surname, email, pass, username, birthday) VALUES (:name, :surname, :email, :pass, :username, :birthday)");
     		
     		$query->bindParam(':name', $name);
     		$query->bindParam(':surname', $surname);
@@ -53,7 +55,7 @@ class ResearcherDao{
 
     		return $query->execute();
     		#hacer una devolucion de porque no se pudo almacenar en la base de datos
-    		#ver como capturar los constrains de a base de datos. rodear 
+    		#ver como capturar los constrains de a base de datos. rodear */
     	}
     
     }
