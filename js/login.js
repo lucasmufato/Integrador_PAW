@@ -20,13 +20,25 @@ ingresar = function(){
             alert("No se pudo conectar con el servidor");
             return;
         }
-        alert(data);
+        console.log(data);
+        data = JSON.parse(data);
+        switch (data.status){
+            case "ok":
+                alert("loge exitoso");
+                break;
+            case "wrong":
+                alert("usuario o contraseña incorrectas");
+                break;
+            default:
+                alert("error al parsear respuesta");
+                break;
+        }
+        
     };
     $.post(url,data,funcion);
 };
 
 registrarse = function(){
-    console.log("apretaste el boton");
     var data = $("#newResearcher").serialize();
     data = data + "&do=newResearcher";
     var funcion = function(data,status){

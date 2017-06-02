@@ -7,28 +7,23 @@ class Login{
     }
     
     public function newResearcher(){
-        $name = $surname = $bday = $mail = $use = $pass1 = $pass2 = null;
-        $errores = [];
-        if( isset( $_POST["name"] ) ){
-            $name = trim( $_POST["name"] );
-        }
-        if( isset( $_POST["surname"] ) ){
-            $surname = trim( $_POST["surname"] );
-        }
-        if( isset( $_POST["bday"] ) ){
-            $bday = trim( $_POST["bday"] );
-        }
-        if( isset( $_POST["mail"] ) ){
-            $mail = trim( $_POST["mail"] );
-        }
-        if( isset( $_POST["username"] ) ){
-            $user = trim( $_POST["username"] );
-        }
-        if( isset( $_POST["pass1"] ) ){
-            $pass1 = trim( $_POST["pass1"] );
-        }
-        if( isset( $_POST["pass2"] ) ){
-            $pass2 = trim( $_POST["pass2"] );
+        $name = trim( $_POST["name"] );
+        $surname = trim( $_POST["surname"] );
+        $bday = trim( $_POST["bday"] );
+        $mail = trim( $_POST["mail"] );
+        $user = trim( $_POST["username"] );
+        $pass1 = trim( $_POST["pass1"] );
+        $pass2 = trim( $_POST["pass2"] );
+        
+        $errores = $this->validarFormNewResearcher($name,$surname,$bday,$mail,$user,$pass1,$pass2);
+        
+        if( count($errores)>0 ){
+            $rta = array("status"=>"wrong", "errores"=>$errores);
+            echo json_encode($rta);
+        }else{
+            //aca va el codigo de vicc
+            $rta = array("status"=>"ok", "errores"=>$errores);
+            echo json_encode($rta);
         }
         
     }
@@ -39,14 +34,65 @@ class Login{
         $dao = new ResearcherDao();
         $rta = $dao->validateResearcher($user,$pass);
         $dao->close();
+        $serverResponse;
         if($rta){
-            echo "logeo exitoso";
+            $serverResponse =  array("status" => "ok");
         }else{
-            echo "usuario o contraseña incorrectos";
+            $serverResponse = array("status" => "wrong");
         }
+        echo json_encode($serverResponse);
     }
     
-}
+    private function validarFormNewResearcher($name,$surname,$bday,$mail,$user,$pass1,$pass2){
+        $errores = [];
+
+        if(strlen($name)<3 || strlen($name)>50){
+            $errores[] = "el nombres es muy largo o corto" ;
+        }
+        if(strlen($name)<3 || strlen($name)>50){
+            $errores[] = "el nombres es muy largo o corto" ;
+        }
+        
+        $bday = date( "d/m/y", strtotime($bday) );
+        $today = date("d/m/y");
+        
+        if($bday>$today){
+            //$errores[] = "la fecha de nacimiento no puede ser mayor que hoy";
+        }else{
+            $minDate = date( "d/m/y", strtotime("01/01/1950") );
+            if($bday<$minDate){
+                //$errores[] = "no se aceptan viejos :O, solo ṕersonas mayores que 1950";
+            }
+        }
+        
+        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            $errores[] = "el mail no es correcto";
+        }
+        
+        if(str_word_count($user)>1){
+            $errores[] = "el nombre de usuario no puede tener espacios";
+        }
+        
+        if($pass1 !== $pass2){
+            $errores[] = "los passwords son distintos";
+        }else{
+            //if( str_word_count($pass1)>1 ){
+            if( strpos($pass1, " ") !== false ){    //si no contiene espacios devuelve false
+                $errores[] = "el password no puede tener espacios";
+            }else{
+                $uppercase = preg_match('@[A-Z]@', $pass1);
+                $lowercase = preg_match('@[a-z]@', $pass1);
+                $number    = preg_match('@[0-9]@', $pass1);
+
+                if(!$uppercase || !$lowercase || !$number || strlen($pass1) < 8) {
+                    $errores = "el password debe contener una minuscula, una mayuscula, un numero y 8 o mas caracteres";
+                }
+            }
+        }
+        return $errores;
+    }
+    
+}  // FIN DE LA CLASE
 
 if(! isset($_POST['do']) ){
     exit();
