@@ -1,5 +1,5 @@
 ﻿-- create database Inmunologia
--- create role lucira password 'mufina';
+create role lucria password 'mufina';
 
 --TABLA DEL INVESTIGADOR
 CREATE TABLE researcher(

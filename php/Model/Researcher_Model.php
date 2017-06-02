@@ -10,8 +10,7 @@ class Researcher{
     protected $birthday;
     protected $image;
     
-    
-    public function __contruct($name, $surname, $user, $password, $email, $birthday){
+    public function __construct($name, $surname, $user, $password, $email, $birthday){
     	$this->name = $name;
     	$this->surname = $surname;
     	$this->user = $user;
@@ -47,5 +46,9 @@ class Researcher{
     public function setPasswors($newPassword){
     	$this->password = $newPassword;
     }
+    
+    public function toString(){
+        return $this->name . $this->surname .  $this->user .$this->password . $this->email . $this->birthday;
+    }
 }
->
+?>

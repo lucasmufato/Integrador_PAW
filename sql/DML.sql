@@ -1,4 +1,5 @@
-﻿GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO lucira;
+﻿GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO lucria;
+ALTER ROLE lucria WITH login;
 
 INSERT INTO status(id_status, tipo) VALUES (1, 'Finalizado');
 INSERT INTO status(id_status, tipo) VALUES (2, 'En Proceso');

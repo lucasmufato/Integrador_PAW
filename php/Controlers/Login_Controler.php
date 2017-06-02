@@ -1,5 +1,6 @@
 <?php
 include_once("../Dao/Researcher_Dao.php");
+include_once("../Model/Researcher_Model.php");
 
 class Login{
     
@@ -21,10 +22,24 @@ class Login{
             $rta = array("status"=>"wrong", "errores"=>$errores);
             echo json_encode($rta);
         }else{
-            //aca va el codigo de vicc
+            #creamos el nuevo researcher en base a los datos ingresados y que sean las claves iguales
+            $researcher = new Researcher($name, $surname, $user, $pass1, $mail, $bday);
+            echo "r: " . $researcher->toString();
+            #dao que controla la persistencia del modelo
+            $dao = new ResearcherDao();
+            
+            $rta = $dao->newResearcher($researcher);
+            $dao->close();
+            if ($rta){
+                echo "Se ha registrado un nuevo Investigador. Bienvenido!";
+            } else {
+                echo "Error..! Lo lamentamos, algo no salió bien :|";
+            }
             $rta = array("status"=>"ok", "errores"=>$errores);
             echo json_encode($rta);
+
         }
+        $dao->close();
         
     }
     

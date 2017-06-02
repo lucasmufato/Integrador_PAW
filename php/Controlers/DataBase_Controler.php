@@ -1,11 +1,10 @@
 <?php
-
 class DataBase{
     
     /*   esto podria sacarse de un archivo de configuracion   */
-    private $user="lucira";
+    private $user="lucria";
     private $password="mufina";
-    private $DBname="Inmunologia";
+    private $DBname="inmunologia";
     private $host="localhost";
     private $port=5432;
     
