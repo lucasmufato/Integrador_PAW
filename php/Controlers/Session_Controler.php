@@ -2,22 +2,39 @@
 
 class SessionControler{
 
-    public function __contruct(){
+    public function __construct(){
     }
 
     public function checkSession(){
-    
+        session_start();
+        return isset( $_SESSION["id"] );
     }
     
-    public function newSession(){
-    
+    public function newSession($id){
+        session_start();
+        $_SESSION["id"]=$id;
     }
     
     public function deleteSession(){
-    
+        session_start();
+        session_unset(); 
+        session_destroy(); 
     }
 
     public function getUserName(){
     	
+    }
+    
+    public function getId(){
+        return $_SESSION["id"];
+    }
+}//FIN DE LA CLASE
+
+if( isset($_POST["action"]) ){
+    if($_POST["action"] === "deslogear"){
+        $se = new SessionControler();
+        $se->deleteSession();
+        $rta= array("status"=>"ok");
+        echo json_encode($rta);
     }
 }
