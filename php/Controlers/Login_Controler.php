@@ -4,7 +4,7 @@ include_once("../Model/Researcher_Model.php");
 include_once("Session_Controler.php");
 
 class Login{
-    
+   
     public function __construct(){
     }
     
@@ -12,6 +12,7 @@ class Login{
         $name = trim( $_POST["name"] );
         $surname = trim( $_POST["surname"] );
         $bday = trim( $_POST["bday"] );
+        echo $bday;
         $mail = trim( $_POST["mail"] );
         $user = trim( $_POST["username"] );
         $pass1 = trim( $_POST["pass1"] );
@@ -65,24 +66,38 @@ class Login{
     private function validarFormNewResearcher($name,$surname,$bday,$mail,$user,$pass1,$pass2){
         $errores = [];
 
-        if(strlen($name)<3 || strlen($name)>50){
+        if(strlen($name)< 3 || strlen($name)>50){
             $errores[] = "el nombres es muy largo o corto" ;
         }
-        if(strlen($name)<3 || strlen($name)>50){
+        if(strlen($name)< 3 || strlen($name)>50){
             $errores[] = "el nombres es muy largo o corto" ;
         }
         
-        $bday = date( "d/m/y", strtotime($bday) );
-        $today = date("d/m/y");
+       // $bday = date( "d/m/y", strtotime($bday) );
+      //  echo "    " . $bday;
+        $valuesDate = explode('/', $bday);
         
-        if($bday>$today){
-            //$errores[] = "la fecha de nacimiento no puede ser mayor que hoy";
-        }else{
-            $minDate = date( "d/m/y", strtotime("01/01/1950") );
-            if($bday<$minDate){
-                //$errores[] = "no se aceptan viejos :O, solo ṕersonas mayores que 1950";
+        #verificamos que sea una fecha valida
+        echo $valuesDate[0] . "   ";
+        echo $valuesDate[1] . "   ";
+        echo $valuesDate[2] . "   ";
+        if(checkdate($valuesDate[1], $valuesDate[0], $valuesDate[2])){
+            $today = date("d/m/y");
+            echo "     " . $today;
+            $valuesToday = explode('/', $today);
+            echo $valuesToday[0] . "   ";
+            echo $valuesToday[1] . "   ";
+            echo $valuesToday[2] . "   ";
+            if ($valuesDate[2] < 1950){
+               $errores[] = "no se aceptan viejos :O, solo ṕersonas mayores que 1950";
+            } else {
+                $valuesToday[2] = $valuesToday[2] + 2000;
+                if ($valuesDate[1] <= $valuesToday[1] && $valuesDate[0] <= $valuesToday[0] && $valuesDate[2] <= $valuesToday[2]){
+                        $errores[] = "la fecha de nacimiento no puede ser mayor que hoy";
+                   }
             }
         }
+            
         
         if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             $errores[] = "el mail no es correcto";
