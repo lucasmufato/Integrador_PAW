@@ -18,18 +18,19 @@ class ResearcherDao{
     public function validateResearcher($userName, $password){
         //EL METODO DEBE DEVOLVER EL ID DEL USUARIO o NULL
     	if (! is_null($this->connection)){
-    		$query = $this->connection->prepare(" SELECT COUNT(username) FROM researcher WHERE username = :username and pass = :password" );
+    		$query = $this->connection->prepare(" SELECT id_researcher FROM researcher WHERE username = :username and pass = :password" );
     		$query->bindParam('username', $userName);
     		$query->bindParam('password', $password);
     		if ($query->execute()) {
     			$showResult = $query->fetchColumn();
-                if($showResult == 1){
-    				return 1;
+                if(is_numeric( $showResult ) ){
+    				return $showResult;
     			} else {
     				return false;
     			}
-    		}
+            }
     	}
+        return false;
     }
     
     #se encarga de persistir en la BD
