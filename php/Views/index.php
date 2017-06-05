@@ -1,19 +1,12 @@
 <?php 
 
-require_once('./vedor/autoloarder.php');
+include_once ("../Controlers/Session_Controler.php");
+require_once ("/var/www/html/Integrador_PAW/vendor/autoload.php");
 
-
-
-$user = $_POST['l_user'];
-$password = $_POST['l_pass'];
-
-$dao = new Researcher_Dao();
-if ($dao->validateResearcher($user, $password)) {
-	echo "Error, no existen investigadores con ese nombre";
-} else {
-	$dir = './Templates/indexTemplate.twig'; 
+$session = new SessionControler();
+$user = $session->getUserName();	 
+$dir = "Templates/";
 	$loader = new Twig_Loader_Filesystem($dir);
 	$twig = new Twig_Environment($loader);
-}
-
+	echo $twig->render('indexTemplate.twig', compact('user'));
  ?>

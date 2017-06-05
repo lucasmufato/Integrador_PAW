@@ -3,7 +3,7 @@
     include_once("../Controlers/Session_Controler.php");
     $s = new SessionControler();
     if(  $s->checkSession() ){
-        header('Location: '. "sesion_test_view.php");
+        header('Location: '. "sesion_test_view.php"); #desp cambiar por index.php
     }
     //si sigue por aca es q no esta logueado
 ?>

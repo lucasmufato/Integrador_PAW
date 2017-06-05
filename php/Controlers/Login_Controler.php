@@ -12,7 +12,6 @@ class Login{
         $name = trim( $_POST["name"] );
         $surname = trim( $_POST["surname"] );
         $bday = trim( $_POST["bday"] );
-        echo $bday;
         $mail = trim( $_POST["mail"] );
         $user = trim( $_POST["username"] );
         $pass1 = trim( $_POST["pass1"] );
@@ -57,6 +56,7 @@ class Login{
             $serverResponse =  array("status" => "ok");
             $sesionControler = new SessionControler();
             $sesionControler->newSession($rta);
+            $sesionControler->setUserName($user);
         }else{
             $serverResponse = array("status" => "wrong","errores"=>$rta);
         }

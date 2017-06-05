@@ -22,7 +22,14 @@ class SessionControler{
     }
 
     public function getUserName(){
+
+        session_start();
+        return $_SESSION["userName"];
     	
+    }
+
+    public function setUserName($userName){
+        $_SESSION["userName"] = $userName;
     }
     
     public function getId(){
