@@ -74,7 +74,8 @@ class Login{
         }
         
         $valuesDate = explode('-', $bday);
-        
+        $valuesDate = explode('/', $bday);
+                
         #verificamos que sea una fecha valida
         if(checkdate($valuesDate[1], $valuesDate[0], $valuesDate[2])){
             $today = date("d/m/y");

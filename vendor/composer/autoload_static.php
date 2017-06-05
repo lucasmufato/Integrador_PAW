@@ -10,9 +10,20 @@ class ComposerStaticInit787c5e05eba877c4b654771ca2d3e6d6
         'f084d01b0a599f67676cffef638aa95b' => __DIR__ . '/..' . '/smarty/smarty/libs/bootstrap.php',
     );
 
+    public static $prefixesPsr0 = array (
+        'T' => 
+        array (
+            'Twig_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixesPsr0 = ComposerStaticInit787c5e05eba877c4b654771ca2d3e6d6::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

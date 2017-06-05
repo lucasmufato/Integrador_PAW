@@ -1,10 +1,19 @@
 <?php 
 
-include 'Index_View.php'; #incluyo la vista que quiero mostrar
+require_once('./vedor/autoloarder.php');
 
-$templateIndex = new Index_View();
-$templateIndex->userName = ['Victoria'];
-$templateIndex->render('index.phtml');
 
+
+$user = $_POST['l_user'];
+$password = $_POST['l_pass'];
+
+$dao = new Researcher_Dao();
+if ($dao->validateResearcher($user, $password)) {
+	echo "Error, no existen investigadores con ese nombre";
+} else {
+	$dir = './Templates/indexTemplate.twig'; 
+	$loader = new Twig_Loader_Filesystem($dir);
+	$twig = new Twig_Environment($loader);
+}
 
  ?>

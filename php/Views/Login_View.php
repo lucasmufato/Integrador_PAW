@@ -24,7 +24,7 @@
 <body>
     <section>
         <h1>Iniciar Sesión</h1>
-        <form id="login">
+        <form id="login" method="post" action="index.php">
             <label for="">Nombre de Usuario</label>
             <input type="text" min="3" max="50" required name="l_user">
             <label for="">Password</label>
