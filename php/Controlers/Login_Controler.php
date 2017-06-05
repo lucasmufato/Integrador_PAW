@@ -73,21 +73,13 @@ class Login{
             $errores[] = "el nombres es muy largo o corto" ;
         }
         
-       // $bday = date( "d/m/y", strtotime($bday) );
-      //  echo "    " . $bday;
-        $valuesDate = explode('/', $bday);
+        $valuesDate = explode('-', $bday);
         
         #verificamos que sea una fecha valida
-        echo $valuesDate[0] . "   ";
-        echo $valuesDate[1] . "   ";
-        echo $valuesDate[2] . "   ";
         if(checkdate($valuesDate[1], $valuesDate[0], $valuesDate[2])){
             $today = date("d/m/y");
             echo "     " . $today;
             $valuesToday = explode('/', $today);
-            echo $valuesToday[0] . "   ";
-            echo $valuesToday[1] . "   ";
-            echo $valuesToday[2] . "   ";
             if ($valuesDate[2] < 1950){
                $errores[] = "no se aceptan viejos :O, solo ṕersonas mayores que 1950";
             } else {
