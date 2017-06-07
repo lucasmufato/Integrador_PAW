@@ -3,29 +3,24 @@
 class SessionControler{
 
     public function __construct(){
+        session_start();
     }
 
     public function checkSession(){
-        session_start();
         return isset( $_SESSION["id"] );
     }
     
     public function newSession($id){
-        session_start();
         $_SESSION["id"]=$id;
     }
     
     public function deleteSession(){
-        session_start();
         session_unset(); 
         session_destroy(); 
     }
 
     public function getUserName(){
-
-        session_start();
         return $_SESSION["userName"];
-    	
     }
 
     public function setUserName($userName){

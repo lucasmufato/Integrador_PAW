@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        {% block head %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../../css/baseTemplate.css" />
+            <script src="../../js/deslogeo.js"></script>
+            <script src="../../js/jquery-3.2.1.min.js"></script>
+            <!-- agregar los otros css y js en cada pag -->
+            <title>{{ title }}</title>
+        {% endblock %}
+    </head>
+    <body>
+        <header id="header" class="row ">
+            {% block header %}
+                <nav id="header_nav">
+                    <ul id="header_ul">
+                        <li class="header_li col-3 col-m-3">
+                            <a href="index.php" title="Inicio" class="header_a"><img src="../../images/home.png" alt="" class="header_img">Home</a>
+                        </li>
+                        <li class="header_li col-3 col-m-3">
+                            <a href="#" title="donde estoy?" class="header_a">{{ title }}</a>
+                        </li>
+                        <li class="header_li col-3 col-m-3">
+                            <a href="profile.php" title="Perfil" class="header_a"><img src="../../images/profile.png" alt="" class="header_img">{{ user }}</a>
+                        </li>
+                        <li class="header_li col-3 col-m-3">
+                            <a href="Login_View.php" title="Salir" class="header_a" onclick="desloguear();" ><img src="../../images/logout.png" alt="" class="header_img">desloguearse</a>
+                        </li>
+                    </ul>
+                </nav>
+            {% endblock %}
+        </header>
+        <section id="content" class="row">
+            {% block content %}
+                <!-- secciones a reemplazar -->
+            {% endblock %}
+        </section>
+        <footer id="footer" class="row">
+            {% block footer %}
+                &copy; Copyright 2017 by Medina and Mufato.
+            {% endblock %}
+        </footer>
+    </body>
+</html>

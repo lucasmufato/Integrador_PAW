@@ -15,6 +15,25 @@ class ResearcherDao{
     
     }
     
+    public function getResearcherById($id){
+        //hecho rapido para ver si andaba el perfil
+        $query = $this->connection->prepare(" SELECT * FROM researcher WHERE  id_researcher = :id" );
+        $query->bindParam('id', $id);
+        $query->execute();
+        $r = $query->fetch();
+        
+        $name = $r["name"];
+        $surname = $r["surname"];
+        $email = $r["email"];
+        $pass = $r["pass"];
+        $username = $r["username"];
+        $bday = $r["birthday"];
+        $image = $r["image"];
+        $researcher = new Researcher($name, $surname, $username, $pass, $email, $bday);
+        
+        return $researcher;    
+    }
+    
     public function validateResearcher($userName, $password){
         //EL METODO DEBE DEVOLVER EL ID DEL USUARIO o NULL
     	if (! is_null($this->connection)){

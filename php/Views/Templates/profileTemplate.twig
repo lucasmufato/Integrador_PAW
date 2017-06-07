@@ -1,0 +1,20 @@
+{% extends "baseTemplate.twig" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../../css/profileTemplate.css" />
+{% endblock %}
+{% block content %}
+   
+    <h1> Tu hermoso perfil </h1>
+   
+    <p> {{ researcher.image }} </p>
+    <p> {{ researcher.name }} </p>
+    <p> {{ researcher.surname }} </p>
+    <p> {{ researcher.user }} </p>
+    <p> {{ researcher.email }} </p>
+    <p> {{ researcher.birthday }} </p>
+    
+{% endblock %}

@@ -1,11 +1,39 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<link rel="stylesheet" href="../../css/headerStyle.css">
-	<meta charset="UTF-8">
-	<title>BioGrid</title>
-</head>
-<body>
-	<h1>Bienvenido, hola!! {{ user }}</h1>
-</body>
-</html>
+{% extends "baseTemplate.twig" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../../css/indexTemplate.css" />
+{% endblock %}
+{% block content %}
+    <h1>Nuevo expermiento</h1>
+    <form action="">
+        <label for="">Nombre del experimento</label>
+        <input type="text" min="5" max="100" required name="name">
+        <label for="">Descripcion</label>
+        <input type="password" name="description">
+        <p class="boton verde" id="enter_button"> Nuevo! </p>
+    </form>
+    <div>
+        <h2>Ultimos test</h2>
+        <p><img src="../../images/search.png" alt="Buscar" class="icon"> Buscar</p>
+        <table>
+            <tr>
+               <th>Nombre</th>
+               <th>Fecha</th>
+               <th>Resultado</th>
+            </tr>
+            <tr>
+            {% for test in tests %}
+                <td>test.name</td>
+                <td>test.date</td>
+                <td>test.result</td>
+            {% else %}
+                <td> No hay resultado</td>
+            {% endfor %}
+            </tr>
+            
+        </table>
+    </div>
+{% endblock %}
