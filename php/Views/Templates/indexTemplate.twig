@@ -5,17 +5,23 @@
 {% block head %}
     {{ parent() }}
     <link rel="stylesheet" href="../../css/indexTemplate.css" />
+    <script src="../../js/index.js"></script>
 {% endblock %}
 {% block content %}
     <h1>Nuevo expermiento</h1>
-    <form action="">
-        <label for="">Nombre del experimento</label>
-        <input type="text" min="5" max="100" required name="name">
-        <label for="">Descripcion</label>
-        <input type="password" name="description">
-        <p class="boton verde" id="enter_button"> Nuevo! </p>
+    <form action="" class="row">
+        <div class="row">
+            <label for="" class="col-3 col-6-m">Nombre del experimento</label>
+            <input type="text" min="5" max="100" required name="name" class="col-5 col-6-m" id="name">
+        </div>
+        <div class="row">
+            <label for="" class="col-3 col-12-m">Descripcion</label>
+            <textarea type="text" name="description" class="col-9 col-12-m" id="desc"> </textarea>
+        </div>
+        <div id="errores" class="errores"></div>
+        <p class="button-green col-3 col-12-m " id="create_button">Crear!</p>
     </form>
-    <div>
+    <div class="row">
         <h2>Ultimos test</h2>
         <p><img src="../../images/search.png" alt="Buscar" class="icon"> Buscar</p>
         <table>
