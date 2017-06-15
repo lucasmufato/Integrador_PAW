@@ -12,7 +12,7 @@
         {% endblock %}
     </head>
     <body>
-        <header>
+        <header id="header" class="row ">
             {% block header %}
               <nav id="header_nav">
                     <ul id="header_ul">
@@ -20,7 +20,7 @@
                             <a href="index.php" title="Inicio" class="header_a"><img src="../../images/home.png" alt="" class="header_img">Home</a>
                         </li>
                         <li class="header_li col-3 col-m-3">
-                            <a href="#" title="donde estoy?" class="header_a">{{ title }}</a>
+                            <a href="#" title="donde estoy?" class="header_a"><img src="../../images/pipeta.png" alt="" class="header_img">{{ title }}</a>
                         </li>
                         <li class="header_li col-3 col-m-3">
                             <a href="profile.php" title="Perfil" class="header_a"><img src="../../images/profile.png" alt="" class="header_img">{{ user }}</a>
