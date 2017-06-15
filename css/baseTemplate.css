@@ -114,22 +114,25 @@ body{
 }
 
 #header_nav{
-    
+    background-color: red;
 }
 
 #header_ul{
     list-style: none;
     margin: 0;
     padding: 0;
+
 }
 
 .header_li a{
     display: inline-block;
     width: 100%;
+      text-decoration:none;
 }
 
 .header_li a:visited, .header_li a:link {
     color: whitesmoke;
+
 }
 
 .header_li:hover{
