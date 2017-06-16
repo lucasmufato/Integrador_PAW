@@ -109,7 +109,7 @@
 /*             estilo del header          */
 
 #header{
-    background-color: #555;
+    background-color: #337a15;
    /* color: whitesmoke;*/
 }
 
@@ -137,7 +137,7 @@
 }
 
 .header_li:hover{
-    background-color: #4CAF50;
+    background-color: #5b9443;
 }
 
 .header_img{
@@ -146,3 +146,14 @@
 
 
 /* estilo del footer */
+
+#footer{
+    background-color: #337a15;
+    color: white;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    padding-top: 10px; 
+    height: 40px;
+    bottom: 0;
+}
