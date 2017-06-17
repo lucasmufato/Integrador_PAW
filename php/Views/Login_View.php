@@ -44,7 +44,7 @@
             <label for="">Apellido</label>
             <input type="text" min="3" max="50" required name="surname">
             <label for="">Fecha Nacimiento</label>
-            <input type="date" min="1950-01-01" max="<?php echo date('Y-m-d'); ?>" required name="bday">
+            <input type="date" min="1950-01-01" max="<?php echo date('Y-m-d'); ?>" required name="bday" placeholder="13-08-1990">
             <label for="">Email</label>
             <input type="email" min="5" max="70" required name="mail">
             <label for="">Nombre de Usuario</label>

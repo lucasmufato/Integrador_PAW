@@ -28,14 +28,15 @@ class Login{
             #dao que controla la persistencia del modelo
             $dao = new ResearcherDao();
             
-            $rta = $dao->newResearcher($researcher);
+            $desdeBD = $dao->newResearcher($researcher);
             $dao->close();
-            if ($rta){
-                echo "Se ha registrado un nuevo Investigador. Bienvenido!";
+            if ($rta === true){
+               $resultadoQuery = "Se ha registrado un nuevo Investigador. Bienvenido!";
+               $status = "ok";
             } else {
-                echo "Error..! Lo lamentamos, algo no salió bien :|";
+                $status = "not ok";                
             }
-            $rta = array("status"=>"ok", "errores"=>$errores);
+            $rta = array("status"=>$status, "errores"=>$resultadoQuery, "respuesta"=>$desdeBD);
             echo json_encode($rta);
 
         }

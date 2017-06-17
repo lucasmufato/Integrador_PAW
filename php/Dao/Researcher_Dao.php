@@ -70,9 +70,27 @@ class ResearcherDao{
         $query->bindParam(':username', $username);
         $query->bindParam(':birthday', $birthday);
 
-        return $query->execute();
+        try{
+            if ($query->execute()){
+                return true;
+            }
+        } catch (Exception $e){
+            $error = $query->errorInfo();
+            
+            if (strpos($error[2], 'username')) {
+                return "El nombre de usuario ya esta en uso";
+            } else{
+                if (strpos($error[2], 'mail')){
+                    return "El email ya se encuentra en uso";
+                }
+            }
+            return $error[2];
+        }
+         
+
         #hacer una devolucion de porque no se pudo almacenar en la base de datos
         #ver como capturar los constrains de a base de datos. 
+        
     }
 
     #encargada de dar cierre de la correccion
