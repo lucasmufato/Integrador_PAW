@@ -23,6 +23,7 @@
 </head>
 <body>
     <section>
+    <!-- MOSTRAR MSJ DE ERRORES PARA USUARIO Y CONTRASEÑA CUANDO LE PIFIAN-->
         <h1>Iniciar Sesión</h1>
         <form id="login" method="post" action="index.php">
             <label for="">Nombre de Usuario</label>

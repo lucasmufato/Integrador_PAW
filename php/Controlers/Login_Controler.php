@@ -34,9 +34,9 @@ class Login{
                $resultadoQuery = "Se ha registrado un nuevo Investigador. Bienvenido!";
                $status = "ok";
             } else {
-                $status = "not ok";                
+                $status = "wrong";                
             }
-            $rta = array("status"=>$status, "errores"=>$resultadoQuery, "respuesta"=>$desdeBD);
+            $rta = array("status"=>$status, "errores"=>$desdeBD);
             echo json_encode($rta);
 
         }
@@ -68,10 +68,10 @@ class Login{
         $errores = [];
 
         if(strlen($name)< 3 || strlen($name)>50){
-            $errores[] = "el nombres es muy largo o corto" ;
+            $errores[] = "El nombres es muy largo o corto" ;
         }
         if(strlen($name)< 3 || strlen($name)>50){
-            $errores[] = "el nombres es muy largo o corto" ;
+            $errores[] = "El nombres es muy largo o corto" ;
         }
         
         $valuesDate = explode('-', $bday);

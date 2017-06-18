@@ -49,5 +49,11 @@ BOTON DE GOOGLE
     section{
         width: 100%;
     }
-    
+}
+
+.msjErrores{
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+    margin-bottom: 15px;
+    padding: 4px 12px;
 }
