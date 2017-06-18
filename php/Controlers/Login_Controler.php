@@ -30,7 +30,7 @@ class Login{
             
             $desdeBD = $dao->newResearcher($researcher);
             $dao->close();
-            if ($rta === true){
+            if ($desdeBD === true){
                $resultadoQuery = "Se ha registrado un nuevo Investigador. Bienvenido!";
                $status = "ok";
             } else {
