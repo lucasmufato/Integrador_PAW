@@ -6,10 +6,13 @@
     {{ parent() }}
     <link rel="stylesheet" href="../../css/indexTemplate.css" />
     <script src="../../js/index.js"></script>
+    <script src="../../js/modelo.js"></script>
+    <script src="../../js/testControler.js"></script>
 {% endblock %}
 {% block content %}
    <section id="datosTest">
        <p id="testName">Nombre: {{ test.name }}</p>
+       <p id="testId" style="display: none">{{ test.id }}</p>
        <p id="testDescription">Descripcion: {{ test.description }} </p>
        <p id="testResult">Resultado: {{ test.resultAsString() }} </p>
        <!-- IRIAN MAS DATOS -->
@@ -23,22 +26,27 @@
         <p id="stepsDescription" class="">Ingrese y ordene los pasos a realizar, <strong>tenga en cuenta que una ves iniciado el test no podra cambiarlos</strong></p>
         <form action="" id="stepsForm">
             <p id="stepsFormTitle">Nuevo Paso</p>
+            <!--  pense q iban pero los agrege de mas
             <label for="">Nombre:</label>
             <input type="text" id="stepsNewName" placeholder="Nombre del paso" name="stepsNewName">
+            -->
             <label for="">Descripcion:</label>
             <input type="text" id="stepsNewDescr" placeholder="Descripcion del paso" name="stepsNewDescr">
             <label for="">Tipo de paso:</label>
             <input type="radio" name="stepsNewType" value="well"> wells
-            <input type="radio" name="stepsNewType" value="plate"> plaqueta
+            <input type="radio" name="stepsNewType" value="plate" checked> plaqueta
             <input type="number" id="stepsNewTime" name="stepsNewTime">
-            <button id="stepsNewButton">Crear Paso</button>
+            <p id="stepsNewButton" class="button-green" onclick="controlador.newStep()">Crear Paso</p>
+            <div class="errores" id="stepsNewError">
+                
+            </div>
         </form>
        
        <!-- LOS PASOS -->
        <table id="stepsTable">
            <tr id="stepsTHead">
                <th>Select</th>
-               <th>Nombre</th>
+               <th style="display: none;">ID</th>
                <th>Descripcion</th>
                <th>Tipo</th>
                <th>Orden</th>
