@@ -1,7 +1,6 @@
 desloguear = function(){
     var url = "../Controlers/Session_Controler.php";
     var data = { "action": "deslogear"};
-    console.log("jdjshdf");
     var funcion = function(data,status){
         if(status !== "success"){
             alert("No se pudo conectar con el servidor");
@@ -9,7 +8,7 @@ desloguear = function(){
         }else{
             data = JSON.parse(data);
             console.log(data);
-            window.location.href = "Login_View.php";
+            window.location.href = "login.php";
         }
         
     };

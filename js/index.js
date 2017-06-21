@@ -1,4 +1,4 @@
-var url = "../Controlers/CreateTest_Controler.php";
+var url = "../Controlers/Test_Controler.php";
 
 $(document).ready(function(){    
     $("#create_button").click(function(){
@@ -35,7 +35,7 @@ nuevoTest = function(){
         data = JSON.parse(data);
         switch (data.status){
             case "ok":
-                window.location.href = "crearTest.php?id="+data.id;
+                window.location.href = "test.php?id="+data.id;
                 break;
             case "wrong":
                 $("#errores") = data.errores;

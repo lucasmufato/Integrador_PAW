@@ -32,9 +32,9 @@
             </tr>
             <tr>
             {% for test in tests %}
-                <td>test.name</td>
-                <td>test.date</td>
-                <td>test.result</td>
+                <td><a href="test.php?id={{ test.id }} "> {{test.name}} </a></td>
+                <td>{{test.date}}</td>
+                <td>{{test.resultAsString()}}</td>
             {% else %}
                 <td> No hay resultado</td>
             {% endfor %}

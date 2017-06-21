@@ -1,5 +1,5 @@
 ﻿-- create database Inmunologia
-create role lucria password 'mufina';
+--create role lucria password 'mufina';
 
 --TABLA DEL INVESTIGADOR
 CREATE TABLE researcher(
@@ -40,10 +40,12 @@ CREATE TABLE test(
 	test_date date not null,
 	test_description text,
 	id_result integer,
+	id_researcher integer,
 	result_description text,
 
 	CONSTRAINT test_pk PRIMARY KEY(id_test),
-	CONSTRAINT fk_test__result FOREIGN KEY (id_result) REFERENCES result (id_result)
+	CONSTRAINT fk_test__result FOREIGN KEY (id_result) REFERENCES result (id_result),
+	CONSTRAINT fk_test__researcher FOREIGN KEY (id_researcher) REFERENCES researcher (id_researcher)
 );
 
 --PLACA EN DONDE SE HACE EL ENSAYO

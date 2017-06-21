@@ -1,0 +1,64 @@
+{% extends "baseTemplate.twig" %}
+
+{% block title %}{{ test.name }}{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../../css/indexTemplate.css" />
+    <script src="../../js/index.js"></script>
+{% endblock %}
+{% block content %}
+   <section id="datosTest">
+       <p id="testName">Nombre: {{ test.name }}</p>
+       <p id="testDescription">Descripcion: {{ test.description }} </p>
+       <p id="testResult">Resultado: {{ test.resultAsString() }} </p>
+       <!-- IRIAN MAS DATOS -->
+       
+   </section>
+   
+   <section id="sectionSteps">
+      <!-- SECCION EN LA QUE SE CARGAN Y MUESTRAN LOS PASOS -->
+       
+        <!-- LA CARGA DE NUEVOS PASOS SOLO SE DEBERIA APARECER SI EL TEST SE ESTA CREANDO -->
+        <p id="stepsDescription" class="">Ingrese y ordene los pasos a realizar, <strong>tenga en cuenta que una ves iniciado el test no podra cambiarlos</strong></p>
+        <form action="" id="stepsForm">
+            <p id="stepsFormTitle">Nuevo Paso</p>
+            <label for="">Nombre:</label>
+            <input type="text" id="stepsNewName" placeholder="Nombre del paso" name="stepsNewName">
+            <label for="">Descripcion:</label>
+            <input type="text" id="stepsNewDescr" placeholder="Descripcion del paso" name="stepsNewDescr">
+            <label for="">Tipo de paso:</label>
+            <input type="radio" name="stepsNewType" value="well"> wells
+            <input type="radio" name="stepsNewType" value="plate"> plaqueta
+            <input type="number" id="stepsNewTime" name="stepsNewTime">
+            <button id="stepsNewButton">Crear Paso</button>
+        </form>
+       
+       <!-- LOS PASOS -->
+       <table id="stepsTable">
+           <tr id="stepsTHead">
+               <th>Select</th>
+               <th>Nombre</th>
+               <th>Descripcion</th>
+               <th>Tipo</th>
+               <th>Orden</th>
+               <th>Eliminar</th>
+           </tr>
+           {% for stepPlate in stepsPlate %}
+                <td><input type="radio"></td>
+                <td>stepPlate.name</td>
+                <td>stepPlate.description</td>
+                <td>stepPlate.type</td>
+                <td><input type="number" min="1"></td>
+                <td> x </td>
+            {% endfor %}
+           
+           
+       </table>
+       
+   </section>
+    <section id="sectionPlate">
+        <h2>aca iria la plaqueta con los wells</h2>
+    </section>
+
+{% endblock %}

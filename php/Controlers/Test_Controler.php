@@ -1,8 +1,8 @@
 <?php  
 
-include_once("../Dao/CreateTest_Dao.php");
+include_once("../Dao/Test_Dao.php");
 
-class CreateTestControler{
+class TestControler{
     
     public function creatTest(){
         
@@ -15,7 +15,7 @@ class CreateTestControler{
         $name = $_POST["name"];
         $desc = $_POST["description"];
         
-        $dao = new CreateTestDao();
+        $dao = new TestDao();
         $id = $dao->createTest($name,$desc);
         
         if( ! is_numeric($id) ){
@@ -30,18 +30,14 @@ class CreateTestControler{
         
     }
     
-    public function getTestById($id){
-        return "a";
-    }
-    
 }//fin de la clase
 
 if( isset($_POST['do']) ){
     $accion = $_POST["do"];
-    $ctc = new CreateTestControler();
+    $tc = new TestControler();
     switch($accion){
         case "nuevoTest":
-            $ctc->creatTest();
+            $tc->creatTest();
             break;
     }
 }

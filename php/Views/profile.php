@@ -6,7 +6,7 @@ require_once ("../../vendor/autoload.php");
 
 $session = new SessionControler();
 if(! $session->checkSession()){
-    header('Location: '. "Login_View.php");
+    header('Location: '. "login.php");
     exit();
 }
 $user = $session->getUserName();
