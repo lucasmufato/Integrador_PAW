@@ -70,7 +70,7 @@ registrarse = function(){
     /*como tomo el array que se envia?*/
     
     var funcion = function(status){
-        if( status != "success"){
+        if( status !== "success"){
             mostrarMensajesErrores("Error, usuario o correo ya utilizados");  
             return;
         }else {
@@ -80,7 +80,7 @@ registrarse = function(){
               
         
         }
-        /*alert(data);*/
+        alert(data);
    };
     $.post(url,data,funcion);
 };

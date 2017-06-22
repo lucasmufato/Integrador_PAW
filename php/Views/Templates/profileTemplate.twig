@@ -8,13 +8,15 @@
 {% endblock %}
 {% block content %}
    
-    <h1> Tu hermoso perfil </h1>
+    <h1> Mi perfil </h1>
    
-    <p> {{ researcher.image }} </p>
-    <p> {{ researcher.name }} </p>
-    <p> {{ researcher.surname }} </p>
-    <p> {{ researcher.user }} </p>
-    <p> {{ researcher.email }} </p>
-    <p> {{ researcher.birthday }} </p>
-    
+   <div class="card row">
+   	<img src="../../images/icons_profile/2.png" class="avatar">
+   	<div class="contenedor">
+    	<h2 class="title"> {{ researcher.name }} {{researcher.surname}}</h2>
+    	<p id="email"> {{ researcher.email }} </p>
+    	<p> {{ researcher.user }} </p>
+    	<p> {{ researcher.birthday }} </p>
+    </div>
+   </div>
 {% endblock %}

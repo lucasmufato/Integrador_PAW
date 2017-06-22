@@ -1,0 +1,24 @@
+.avatar{
+	text-align: center;
+	width: 80%;
+	margin-top: 2%;
+}
+
+.card{
+	
+	max-width: 300px;
+	margin: auto;
+	margin-top: 2%;
+	margin-bottom: 2.5%;
+	text-align: center;
+}
+
+.contenedor{
+	padding: 0 16px;
+	margin-bottom: 40%;
+}
+
+.title{
+	color: black;
+	font-size: 18px;
+}
