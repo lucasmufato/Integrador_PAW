@@ -1,9 +1,19 @@
-#formulario_nuevo_experimento{
+#formulario_nuevo_experimento, #datosTest, #sectionSteps{
+    margin-top: 1%;
 	border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
     width: 80%;
     margin-left: 10%;
+}
+
+#datosTest{
+    background-color: #c9eebb;
+    padding: 1%;
+}
+
+#datosTest p{
+    font-size: 15px;
 }
 
 body{
@@ -12,8 +22,8 @@ body{
 }
 
 h1{
-	padding: 2%;
-	margin-left: 8%;
+	padding: 1%;
+	margin-left: 8.5%;
 }
 
 #name, #desc{
@@ -51,6 +61,7 @@ h1{
     border: 1px solid #ddd;
     font-size: 18px;
     background-color: white;
+    margin-bottom: 2%;
 }
 
 .myTable th, .myTable td{
@@ -71,15 +82,29 @@ h1{
     margin-left: 10%;
 }
 
-#busqueda{
+#busqueda, #stepsNewDescr, #stepsNewTime{
     margin-top: 2%;
     background-position: 10px 10px;
     background-repeat: no-repeat;
-    width: 100%;
     font-size: 16px;
     padding: 12px 20px 12px 40px;
     border: 1px solid #ddd;
     margin-bottom: 12px;
     width: 80%;
     margin-left: 10%;
+}
+
+#stepsNewDescr{
+    width: 100%;
+    margin-left: 0;
+    margin-top: 1%;
+
+}
+
+#stepsNewTime{
+    width: 20%;
+}
+
+#checkWell:checked + #stepsNewTime{
+        display: none;
 }

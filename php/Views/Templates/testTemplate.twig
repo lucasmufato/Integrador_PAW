@@ -11,10 +11,10 @@
 {% endblock %}
 {% block content %}
    <section id="datosTest">
-       <p id="testName">Nombre: {{ test.name }}</p>
-       <p id="testId" style="display: none">{{ test.id }}</p>
-       <p id="testDescription">Descripcion: {{ test.description }} </p>
-       <p id="testResult">Resultado: {{ test.resultAsString() }} </p>
+       <p id="testName"><strong>Nombre:</strong> {{ test.name }}</p>
+       <p id="testId" style="display: none"><strong></strong>{{ test.id }}</p>
+       <p id="testDescription"><strong>Descripción:</strong> {{ test.description }} </p>
+       <p id="testResult"><strong>Resultado:</strong> {{ test.resultAsString() }} </p>
        <!-- IRIAN MAS DATOS -->
        
    </section>
@@ -23,17 +23,18 @@
       <!-- SECCION EN LA QUE SE CARGAN Y MUESTRAN LOS PASOS -->
        
         <!-- LA CARGA DE NUEVOS PASOS SOLO SE DEBERIA APARECER SI EL TEST SE ESTA CREANDO -->
-        <p id="stepsDescription" class="">Ingrese y ordene los pasos a realizar, <strong>tenga en cuenta que una ves iniciado el test no podra cambiarlos</strong></p>
+        <p id="stepsDescription" class=""><i>Ingrese y ordene los pasos a realizar, <strong>tenga en cuenta que una vez iniciado el test no podrá cambiarlos</strong></i></p>
         <form action="" id="stepsForm">
-            <p id="stepsFormTitle">Nuevo Paso</p>
+        <br>
+            <p id="stepsFormTitle"><strong>Nuevo Paso</strong></p>
             <!--  pense q iban pero los agrege de mas
             <label for="">Nombre:</label>
             <input type="text" id="stepsNewName" placeholder="Nombre del paso" name="stepsNewName">
             -->
-            <label for="">Descripcion:</label>
+            <label for=""><strong>Descripción:</strong></label>
             <input type="text" id="stepsNewDescr" placeholder="Descripcion del paso" name="stepsNewDescr">
             <label for="">Tipo de paso:</label>
-            <input type="radio" name="stepsNewType" value="well"> wells
+            <input type="radio" name="stepsNewType" value="well" id="checkWell"> wells
             <input type="radio" name="stepsNewType" value="plate" checked> plaqueta
             <input type="number" id="stepsNewTime" name="stepsNewTime">
             <p id="stepsNewButton" class="button-green" onclick="controlador.newStep()">Crear Paso</p>
