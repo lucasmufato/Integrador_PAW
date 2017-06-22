@@ -26,6 +26,8 @@ class TestControler{
             return;
         }
         
+        $dao->createPlateForTest($id);
+        
         $rta = Array("status" => "ok", "id" => $id);
         echo json_encode($rta);
         return;

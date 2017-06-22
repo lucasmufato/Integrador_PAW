@@ -2,7 +2,8 @@
 
 include_once("../Model/Step.php");
 include_once("../Model/StepPlate.php");
-include_once("../Dao/Steps_Dao");
+include_once("../Dao/Steps_Dao.php");
+include_once("../Dao/Test_Dao.php");
 
 //para seguridad habria que chequear que el usuario que pide el ajax ser el dueño del test correspondiente
 
@@ -33,35 +34,48 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 }
 
 //ultimo paso, si hay errores los envia
-if(count($errores)>0){
-    echo json_encode( array("status"=>"wrong","errores"=>$errores) );
+if( count($errores)>0 ){
+    $rta = array("status"=>"wrong","errores"=>$GLOBALS["errores"]);
+    echo json_encode( $rta );
 }
 
 //  DE ACA PARA ABAJO SON TODOS METODOS PARA LOS GET O POST
 
 function newStep(){
     //primero hago los chequeos
-    if(! isset($_POST["decription"]) || $_POST["decription"]=="" ){
-        $errores[]="Falta la descripcion del paso";
+    if(! isset($_POST["idTest"]) || $_POST["idTest"]=="" ){
+        $GLOBALS["errores"][]="Falta el id del Test";
+    }
+    if(! isset($_POST["description"]) || $_POST["description"]=="" ){
+        $GLOBALS["errores"][]="Falta la descripcion del paso";
     }
     if(! isset($_POST["type"]) || $_POST["type"]=="" ){
-        $errores[]="Falta el tipo de paso";
+        $GLOBALS["errores"][]="Falta el tipo de paso";
     }
      if(! isset($_POST["order"]) || $_POST["order"]=="" ){
-        $errores[]="Falta el order de paso";
+        $GLOBALS["errores"][]="Falta el order de paso";
     }
     //si hay errores salgo
-    if( count($errores)>0 ){
+    if( count( $GLOBALS["errores"] ) >0 ){
         return;
     }
+    $testId = $_POST["idTest"];
     $step = new Step();
     $step->id=null;
     $step->description = $_POST["description"];
     $step->type = $_POST["type"];
+    $step->status = 4;  //HARDCODEADO
     $stepPlate = new StepPlate();
-    $stepPlate->idPlate = 1;    //hardcodeado
+    $daoTest = new TestDao();
+    $stepPlate->idPlate = $daoTest->getPlatesFromTestId($testId);
     $stepPlate->idStep =0;
     $stepPlate->order = $_POST["order"];
     $stepPlate->status = 4;     //hardcodeado
-    
+    $daoSteps = new StepsDao();
+    $step = $daoSteps->NewStep($step);   //me devuelve el mismo step pero con el id con el q lo inserto a la BD
+    $stepPlate->idStep = $step->id;
+    $daoSteps->newStepPlate($stepPlate);
+    //respuesta asi nomas
+    $rta = array("status"=>"ok", "stepId"=> $stepPlate->idStep);
+    echo json_encode( $rta );
 }

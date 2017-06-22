@@ -46,6 +46,7 @@ TestControler = function(){
     this.newStep = function(){
         //obtengo los valores de los inputs para validarlos y despues crear la entrada en la tabla
         //si se guarda bien en la BD
+        
         var divErrores = $("#stepsNewError").text("");  //limpio el contenedor de erorres
         
         var paso = new Step();
@@ -70,26 +71,26 @@ TestControler = function(){
         }
         var funcion = function(data,status){
            if(status !== "success"){
-            alert("No se pudo conectar con el servidor");
-            return;
-        }
-        console.log(data);
-        data = JSON.parse(data);
-        switch (data.status){
-            case "ok":
-                paso.id=data.idPaso;
-                controlador.showNewStep(paso);
-                break;
-            case "wrong":
-                $("#stepsNewError") = data.errores;
-                break;
-            default:
-                alert("error al parsear respuesta");
-                break;
-        }
+                alert("No se pudo conectar con el servidor");
+                return;
+            }
+            console.log(data);
+            data = JSON.parse(data);
+            switch (data.status){
+                case "ok":
+                    paso.id=data.idPaso;
+                    controlador.showNewStep(paso);
+                    break;
+                case "wrong":
+                    $("#stepsNewError") = data.errores;
+                    break;
+                default:
+                    alert("error al parsear respuesta");
+                    break;
+            }
+        
+        };
         $.post(this.url,data,funcion);
-    };
-
     }//fin newStep
     
     //metodo que agrega a la tabla el nuevo paso que recibio del servidor

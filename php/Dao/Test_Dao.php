@@ -23,7 +23,6 @@ class TestDao{
         $query->bindParam(6, $idUser);
         
         $query->execute();
-        //$r = $query->fetch();
         
         //devuelvo esto, aunq podria ser mejor hacer una query por el nombre del test para obtener el id
         return $this->connection->lastInsertId();
@@ -54,7 +53,6 @@ class TestDao{
         $query->execute();
         $tupla = $query->fetch();
         return $this->getTestFromTupla($tupla);
-        
     }
     
     //funcion interna que dada una tupla de la BD en la que se saquen TODOS los datos de la tabla test, devuelve una instacia con esos datos
@@ -70,5 +68,22 @@ class TestDao{
         return $t;
     }
     
+    //funcion que crea LA PRIMER placa para un test
+    public function createPlateForTest($id){
+        $query = $this->connection->prepare("INSERT INTO plaque(id_test, ordinal)VALUES (:id, 1);" );
+        $query->bindParam("id", $id);
+        $query->execute();
+        
+    }
+    
+    //SUPER HARDCODEADO, DEVUELVE EL PRIMER Y POR EL MOMENTO UNICA PLACA PARA CADA EL TEST
+    public function getPlatesFromTestId($idTest){
+        $query = $this->connection->prepare("SELECT * FROM plaque WHERE  :id = id_test ;" );
+        $query->bindParam("id", $idTest);
+        $query->execute();
+        $tupla = $query->fetch();
+        $idPlate = $tupla["id_plaque"];
+        return $idPlate;
+    }
     
 }//fin de la clase
