@@ -24,7 +24,7 @@
 <body>
     <section>
     <!-- MOSTRAR MSJ DE ERRORES PARA USUARIO Y CONTRASEÑA CUANDO LE PIFIAN-->
-        <img src="../../images/icono.jpg" alt="Logo UNLu" >
+        <img src="../../images/icono.png" alt="Logo UNLu" >
         <h1>Iniciar Sesión</h1>
 
         <form id="login" method="post" action="index.php">

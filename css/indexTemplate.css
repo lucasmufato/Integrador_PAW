@@ -7,7 +7,7 @@
 }
 
 body{
-	background-image: url("../images/fondo_principal.jpg");
+//	background-image: url("../images/fondo_principal.jpg");
 	background-repeat: repeat;
 }
 
@@ -42,4 +42,44 @@ h1{
 
 #create_button:hover{
 	 background-color: #45a049;
+}
+
+.myTable{
+    border-collapse: collapse;
+    width: 80%;
+    margin-left: 10%;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    background-color: white;
+}
+
+.myTable th, .myTable td{
+    text-align: left;
+    padding: 12px;
+}
+
+.myTable tr{
+    border-bottom: 1px solid #ddd;
+}
+
+.myTable tr.cabecera, .myTable tr:hover{
+    background-color: #f1f1f1;
+}
+.row h2{
+    margin-top: 2%;
+    width: 80%;
+    margin-left: 10%;
+}
+
+#busqueda{
+    margin-top: 2%;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    width: 80%;
+    margin-left: 10%;
 }
