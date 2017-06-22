@@ -10,8 +10,8 @@ class TestDao{
     	$this->connection = $bd->getConnection();
     }
     
-    public function createTest($name, $descr){
-        $query = $this->connection->prepare(" INSERT INTO test(test_name, test_date, test_description, id_result, result_description)VALUES ( ?, ?, ?, ?, ?); " );
+    public function createTest($name, $descr,$idUser){
+        $query = $this->connection->prepare(" INSERT INTO test(test_name, test_date, test_description, id_result, result_description, id_researcher)VALUES ( ?, ?, ?, ?, ?, ?); " );
         $query->bindParam(1, $name);
         $date = date("Y/m/d");
         $query->bindParam(2, $date);   //la fecha de ahora
@@ -20,9 +20,10 @@ class TestDao{
         $query->bindParam(4, $resultado);
         $result_desc = null;
         $query->bindParam(5, $result_desc);
+        $query->bindParam(6, $idUser);
         
         $query->execute();
-        $r = $query->fetch();
+        //$r = $query->fetch();
         
         //devuelvo esto, aunq podria ser mejor hacer una query por el nombre del test para obtener el id
         return $this->connection->lastInsertId();

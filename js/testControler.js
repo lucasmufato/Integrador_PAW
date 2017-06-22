@@ -9,7 +9,7 @@ $(document).ready(function(){
 });
 
 TestControler = function(){
-    this.url = "../php/Controlers/Test_Ajax_receiver.php";
+    this.url = "../Controlers/Test_Ajax_receiver.php";
     this.ultimoPaso = 1;
     this.test;
     
@@ -61,6 +61,39 @@ TestControler = function(){
         
         //enviar a por ajax
         //estoy iria dentro de la funcion de si salio bien el ajax
+        var data = {
+            action : "newStep",
+            idTest : this.test.id,
+            description : paso.description,
+            type : paso.type,
+            order : paso.order
+        }
+        var funcion = function(data,status){
+           if(status !== "success"){
+            alert("No se pudo conectar con el servidor");
+            return;
+        }
+        console.log(data);
+        data = JSON.parse(data);
+        switch (data.status){
+            case "ok":
+                paso.id=data.idPaso;
+                controlador.showNewStep(paso);
+                break;
+            case "wrong":
+                $("#stepsNewError") = data.errores;
+                break;
+            default:
+                alert("error al parsear respuesta");
+                break;
+        }
+        $.post(this.url,data,funcion);
+    };
+
+    }//fin newStep
+    
+    //metodo que agrega a la tabla el nuevo paso que recibio del servidor
+    this.showNewStep = function(paso){
         var select = '<td><input type="radio" name="selected" value="'+paso.id+'" onclick="controlador.selected()"></td>';
         var id= '<td style="display: none"> '+paso.id+' </td>';
         var desc = '<td> '+paso.description+' </td>';
@@ -68,7 +101,6 @@ TestControler = function(){
         var order = '<td><input type="number" value="'+paso.order+'" onchange="controlador.changeorder()></td>';
         var x = '<td> <button onclick="controlador.delete()" >x</button></td>'
         $('#stepsTable tr:last').after("<tr>"+select+id+desc+type+order+x+"</tr>");
-        
     }
     
 }//fin de la clase TestControler

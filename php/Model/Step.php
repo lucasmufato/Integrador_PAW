@@ -2,9 +2,9 @@
 
 class Step{
     
-    protected $id;
-    protected $name;
-    protected $description;
+    public $id;
+    public $description;
+    public $type;
     
     public function __construct(){
     }

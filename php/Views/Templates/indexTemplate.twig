@@ -30,15 +30,17 @@
                <th>Fecha</th>
                <th>Resultado</th>
             </tr>
-            <tr>
+            
             {% for test in tests %}
+               <tr>
                 <td><a href="test.php?id={{ test.id }} "> {{test.name}} </a></td>
                 <td>{{test.date}}</td>
                 <td>{{test.resultAsString()}}</td>
+                </tr>
             {% else %}
                 <td> No hay resultado</td>
             {% endfor %}
-            </tr>
+           
             
         </table>
     </div>

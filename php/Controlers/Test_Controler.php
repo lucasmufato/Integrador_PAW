@@ -1,6 +1,7 @@
 <?php  
 
 include_once("../Dao/Test_Dao.php");
+include_once("Session_Controler.php");
 
 class TestControler{
     
@@ -14,9 +15,10 @@ class TestControler{
         
         $name = $_POST["name"];
         $desc = $_POST["description"];
+        $idUser = $GLOBALS["sesion"]->getId();
         
         $dao = new TestDao();
-        $id = $dao->createTest($name,$desc);
+        $id = $dao->createTest($name,$desc,$idUser);
         
         if( ! is_numeric($id) ){
             $rta = Array("status" => "wrong", "errores" => $id);
@@ -31,6 +33,11 @@ class TestControler{
     }
     
 }//fin de la clase
+
+$sesion = new SessionControler();
+if(! $sesion->checkSession() ){
+    exit();
+}
 
 if( isset($_POST['do']) ){
     $accion = $_POST["do"];
