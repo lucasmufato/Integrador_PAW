@@ -11,7 +11,7 @@
     <h1>Nuevo expermiento</h1>
     <form action="" class="row" id="formulario_nuevo_experimento">
         <div class="row">
-            <label for="" class="col-3 col-6-m"><strong>Nombre del experimento</strong></label>
+            <label for="" class="col-6 col-6-m"><strong>Nombre del experimento</strong></label>
             <input type="text" min="5" max="100" required name="name" class="col-5 col-6-m" id="name">
         </div>
         <div class="row">
@@ -22,10 +22,11 @@
         <p class="button-green col-3 col-12-m " id="create_button">Crear!</p>
     </form>
     <div class="row">
-        <h2>Ultimos test</h2>
-        <p><img src="../../images/search.png" alt="Buscar" class="icon"> Buscar</p>
-        <table>
-            <tr>
+        <h2>Últimos test</h2>
+        <input type="text" id="busqueda" placeholder="Search for names.." title="Nombre de Test">
+        <!--<p><img src="../../images/search.png" id="busqueda" alt="Buscar" class="icon"> Buscar</p> -->
+        <table class="myTable">
+            <tr class="cabecera">
                <th>Nombre</th>
                <th>Fecha</th>
                <th>Resultado</th>
