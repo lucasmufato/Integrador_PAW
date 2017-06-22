@@ -15,23 +15,24 @@
         <header id="header" class="row ">
             {% block header %}
               <nav id="header_nav">
-                    <ul id="header_ul">
-                        <li class="header_li col-3 col-m-3">
-                            <a href="index.php" title="Inicio" class="header_a"><img src="../../images/home.png" alt="" class="header_img">Home</a>
+                    <ul id="header_ul" class="myTopnav">
+                        <li class="header_li">
+                            <a href="index.php" title="Inicio" class="header_a"><img src="../../images/home.png" alt="" class="header_img"><span class="responsive">Home</span></a>
                         </li>
-                        <li class="header_li col-3 col-m-3">
-                            <a href="#" title="donde estoy?" class="header_a"><img src="../../images/pipeta.png" alt="" class="header_img">{{ title }}</a>
+                        <li class="header_li">
+                            <a href="#" title="donde estoy?" class="header_a"><img src="../../images/pipeta.png" alt="" class="header_img"><span class="responsive">{{ title }}</span></a>
                         </li>
-                        <li class="header_li col-3 col-m-3">
-                            <a href="profile.php" title="Perfil" class="header_a"><img src="../../images/profile.png" alt="" class="header_img">{{ user }}</a>
+                        <li class="header_li">
+                            <a href="profile.php" title="Perfil" class="header_a"><img src="../../images/profile.png" alt="" class="header_img"><span class="responsive">{{ user }}</span></a>
                         </li>
-                        <li class="header_li col-3 col-m-3">
-                            <a href="#" title="Salir" class="header_a" onclick="desloguear();" ><img src="../../images/logout.png" alt="" class="header_img">Salir</a>
-                        </li>
+                        <li class="header_li">
+                            <a href="#" title="Salir" class="header_a" onclick="desloguear();" ><img src="../../images/logout.png" alt="" class="header_img"><span class="responsive">Salir</span></a>
+                        </li>                         
                     </ul>
                 </nav>
             {% endblock %}
         </header>
+
         <section id="content" class="row">
             {% block content %}
                 <!-- secciones a reemplazar -->
@@ -44,3 +45,15 @@
         </footer>
     </body>
 </html>
+
+
+<script>
+function myFunction() {
+    var x = document.getElementsByClassName("");
+    if (x.className === "myTopnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "myTopnav";
+    }
+} 
+</script>
