@@ -4,24 +4,28 @@ var controlador;
 $(document).ready(function(){
     //instancio el controlador
     controlador = new TestControler();    
-    controlador.crearTest();
-    
+    controlador.obtenerTest();
+    controlador.prepare();
 });
 
 TestControler = function(){
     this.url = "../Controlers/Test_Ajax_receiver.php";
     this.ultimoPaso = 1;
     this.test;
+    this.steps=[];
     
     //funcion que obtiene los datos del test del DOM y crea el objeto test
-    this.crearTest = function(){
+    this.obtenerTest = function(){
         this.test = new Test();
         this.test.name= $("#testName").text().replace("Nombre: ","");
         this.test.result = $("#testResult").text().replace("Resultado: ","").replace("Estado: ","");
         this.test.id = $("#testId").text();
+        this.test.plates = $("#testsPlatesId").text();
     }
     
     this.prepare = function(){
+        console.log("por cargar los pasos");
+        this.cargarPasosAjax();
         //en base al estado del test son las cosas que se pueden hacer
         switch(this.test.result){
             //crear pasos, ordenarlos y asignarles wells
@@ -121,8 +125,51 @@ TestControler = function(){
                 celda.addClass("none");
             }
         }
-        
-        
+    }
+    
+    //metodo que pide todos los steps asociados a este test y plaqueta
+    this.cargarPasosAjax = function(){
+        var data = {
+            action : "getStepPlate",
+            idPlate : this.test.plates
+        }
+        var funcion = function(data,status){
+            if(status !== "success"){
+                alert("No se pudo conectar con el servidor");
+                return;
+            }
+            console.log(data);
+            data = JSON.parse(data);
+            if(data.status == "ok"){
+                var i=0;
+                for(i; i<data.steps.length;i++){
+                    //parseo la respuesta del AJAX
+                    var step = controlador.createStep(data.steps[i]);
+                    //guardo el step en un arreglo
+                    controlador.steps = controlador.steps.concat(step);
+                    controlador.showNewStep(step);
+                }
+                //controlador.steps.forEach(,controlador);
+            }
+        }
+        $.get(this.url,data,funcion);
+    }
+    
+    //metodo que toma lo que devuelve el ajax de pasos y encapsula en un objeto Step
+    this.createStep = function(ajaxStep){
+        var step = new Step();
+        step.id = ajaxStep.id;
+        step.description = ajaxStep.descr;
+        step.order = ajaxStep.ordinal;
+        if(ajaxStep.type == undefined){
+            step.type = "plate";
+        }else{
+            step.type = ajaxStep.type;
+        }
+        step.status = ajaxStep.status;
+        step.time = ajaxStep.time;
+        step.wells = ajaxStep.wells;
+        return step;
     }
     
 }//fin de la clase TestControler

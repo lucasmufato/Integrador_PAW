@@ -31,5 +31,28 @@ class StepsDao{
         $query->bindParam(3, $stepPlate->order);
         $query->execute();
     }
+    
+    //funcion que devuelve un arreglo con los steps de un plate
+    public function getStepsFromPlate($plateId){
+        $query = $this->connection->prepare("select s.id_step, s.description, s.id_status, sp.ordina from step s inner join step_plaque sp on s.id_step = sp.id_step inner join plaque p on p.id_plaque = sp.id_plaque where p.id_plaque = :plateID ;" );
+        $query->bindParam("plateID", $plateId);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        $rta=[];
+        //por cada tupla
+        foreach($resultado as $tupla){
+            $id = $tupla["id_step"];
+            $d = $tupla["description"];
+            $s = $tupla["id_status"];
+            $o = $tupla["ordina"];
+            //pongo la tupla en un arreglo
+            $r = array("id"=>$id,"descr"=>$d,"status"=>$s,"ordinal"=>$o,"wells"=>null);
+            //agrego el arreglo al arreglo de respuesta (INCEPTION!)
+            $rta[] = $r;
+        }
+        return $rta;
+    }
 
-}
+
+
+}//fin de la clase

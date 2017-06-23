@@ -24,13 +24,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         case "newStep":
             newStep();
             break;
+            
         default:
             echo json_encode( array("status"=>"wrong","errores"=>"la accion deseada no se encontro") );
             break;
     }    
 }
 if($_SERVER["REQUEST_METHOD"] == "GET"){
-         
+    switch($_GET["action"]){
+        //devuelve los steps asociados a un plate
+        case "getStepPlate":
+            getStepPlate();
+            break;
+            
+        default:
+            echo json_encode( array("status"=>"wrong","errores"=>"la accion deseada no se encontro") );
+            break;
+    }
 }
 
 //ultimo paso, si hay errores los envia
@@ -78,4 +88,15 @@ function newStep(){
     //respuesta asi nomas
     $rta = array("status"=>"ok", "stepId"=> $stepPlate->idStep);
     echo json_encode( $rta );
+}
+
+function getStepPlate(){
+    if(! isset($_GET["idPlate"]) || $_GET["idPlate"]=="" ){
+        $GLOBALS["errores"][]="Falta el id del Plate";
+        return;
+    }
+    $dao = new StepsDao();
+    $steps = $dao->getStepsFromPlate($_GET["idPlate"]);
+    $rta = array("status"=>"ok", "steps"=>$steps);
+    echo json_encode($rta);
 }

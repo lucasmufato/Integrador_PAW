@@ -4,8 +4,7 @@
 
 {% block head %}
     {{ parent() }}
-    <link rel="stylesheet" href="../../css/indexTemplate.css" />
-    <link rel="stylesheet" href="../../css/baseTemplate.css" />
+    <link rel="stylesheet" href="../../css/indexTemplate.css" />1
     <link rel="stylesheet" href="../../css/testTemplate.css" />
     <script src="../../js/index.js"></script>
     <script src="../../js/modelo.js"></script>
@@ -15,6 +14,7 @@
    <section id="datosTest">
        <p id="testName"><strong>Nombre:</strong> {{ test.name }}</p>
        <p id="testId" style="display: none"><strong></strong>{{ test.id }}</p>
+       <p id="testsPlatesId" style="display: none"> {{ plate }} </p>
        <p id="testDescription"><strong>Descripción:</strong> {{ test.description }} </p>
        <p id="testResult"><strong>Resultado:</strong> {{ test.resultAsString() }} </p>
        <!-- IRIAN MAS DATOS -->
