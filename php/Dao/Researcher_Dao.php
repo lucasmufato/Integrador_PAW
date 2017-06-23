@@ -74,6 +74,7 @@ class ResearcherDao{
             if ($query->execute()){
                 return true;
             }
+            return $this->connection->lastInsertId();
         } catch (Exception $e){
             echo "excepcion: $e";
             $error = $query->errorInfo();

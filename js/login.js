@@ -79,12 +79,11 @@ registrarse = function(){
             alert("fallo la conexion con el servidor!");
             return;
         }
-        console.log("a"+data);
         data = JSON.parse(data);
-        console.log("b"+data);
         if (status == "success") {
             switch(data.status){
                 case "ok":
+                    alert(data);
                     window.location.href = "index.php";
                     break;
                 case "wrong":

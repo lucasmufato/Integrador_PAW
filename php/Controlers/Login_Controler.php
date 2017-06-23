@@ -29,16 +29,21 @@ class Login{
             $dao = new ResearcherDao();
             
             $desdeBD = $dao->newResearcher($researcher);
+            
+            $sesionControler = new SessionControler();
+            $sesionControler->newSession($desdeBD);
+            $sesionControler->setUserName($user);
+            
             $dao->close();
-            if ($desdeBD === true){
-                $resultadoQuery = "Se ha registrado un nuevo Investigador. Bienvenido!";
+            
+            if( is_numeric( $desdeBD )){
+                //$resultadoQuery = "Se ha registrado un nuevo Investigador. Bienvenido!";
                 $status = "ok";
             } else {
                 $status = "wrong";                
             }
             $rta = array("status"=>$status, "errores"=>$desdeBD);
             echo json_encode($rta);
-            $dao->close();
         }
         
         
@@ -83,15 +88,20 @@ class Login{
         if(strlen($surname)< 3 || strlen($surname)>50){
             $errores[] = "El apellido es muy largo o corto" ;
         }
-        if($bday == "" || $mail == "" || $user == "" || $pass1 || $pass2){
+        if($bday == "" || $mail == "" || $user == "" || $pass1=="" || $pass2==""){
             $errores[] = "Faltan datos importantes" ;
         }
         
         if(count($errores)>0){
             return $errores;
         }
-        $valuesDate = explode('-', $bday);
-        $valuesDate = explode('/', $bday);
+        $valuesDate;
+        
+        try{
+            $valuesDate = explode('-', $bday);
+            //$valuesDate = explode('/', $bday);
+        }catch(Exceptio $e){
+        }
                 
         #verificamos que sea una fecha valida
         if(checkdate($valuesDate[1], $valuesDate[0], $valuesDate[2])){
