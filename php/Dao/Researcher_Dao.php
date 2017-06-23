@@ -75,8 +75,10 @@ class ResearcherDao{
                 return true;
             }
         } catch (Exception $e){
+            echo "excepcion: $e";
             $error = $query->errorInfo();
-            
+            echo "error: $error";
+            echo "error[2] $error[2]";
             if (strpos($error[2], 'username')) {
                 return "El nombre de usuario ya esta en uso";
             } else{

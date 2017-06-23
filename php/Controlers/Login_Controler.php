@@ -31,16 +31,16 @@ class Login{
             $desdeBD = $dao->newResearcher($researcher);
             $dao->close();
             if ($desdeBD === true){
-               $resultadoQuery = "Se ha registrado un nuevo Investigador. Bienvenido!";
-               $status = "ok";
+                $resultadoQuery = "Se ha registrado un nuevo Investigador. Bienvenido!";
+                $status = "ok";
             } else {
                 $status = "wrong";                
             }
             $rta = array("status"=>$status, "errores"=>$desdeBD);
             echo json_encode($rta);
-
+            $dao->close();
         }
-        $dao->close();
+        
         
     }
     
@@ -48,7 +48,17 @@ class Login{
 
         $user = trim( $_POST["l_user"] );
         $pass = trim( $_POST["l_pass"] );
-
+        $errores=null;
+        if($user == "" ){
+            $errores[] = "Falta el nombre de usuario";
+        }
+        if($pass == ""){
+            $errores[] = "Falta el password";
+        }
+        if($errores != null){
+            echo json_encode( array("status"=>"wrong", "errores"=>$errores) );
+            return;
+        }
         $dao = new ResearcherDao();
         $rta = $dao->validateResearcher($user,$pass);
         $dao->close();
@@ -59,7 +69,7 @@ class Login{
             $sesionControler->newSession($rta);
             $sesionControler->setUserName($user);
         }else{
-            $serverResponse = array("status" => "wrong","errores"=>$rta);
+            $serverResponse = array("status" => "wrong","errores"=>"Usuario o password invalidos.");
         }
         echo json_encode($serverResponse);
     }
@@ -70,10 +80,16 @@ class Login{
         if(strlen($name)< 3 || strlen($name)>50){
             $errores[] = "El nombres es muy largo o corto" ;
         }
-        if(strlen($name)< 3 || strlen($name)>50){
-            $errores[] = "El nombres es muy largo o corto" ;
+        if(strlen($surname)< 3 || strlen($surname)>50){
+            $errores[] = "El apellido es muy largo o corto" ;
+        }
+        if($bday == "" || $mail == "" || $user == "" || $pass1 || $pass2){
+            $errores[] = "Faltan datos importantes" ;
         }
         
+        if(count($errores)>0){
+            return $errores;
+        }
         $valuesDate = explode('-', $bday);
         $valuesDate = explode('/', $bday);
                 

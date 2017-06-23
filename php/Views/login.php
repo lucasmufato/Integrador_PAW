@@ -36,11 +36,12 @@
             <input type="checkbox" checked="checked" id="rememberMe"> 
             <p class="boton verde" id="enter_button"> Ingresar </p>
         </form>
+        <div id="errorLogeo" class="msjErrores"></div>
         
-        <!--   BOTON DE GOOGLE    -->
+        <!--   BOTON DE GOOGLE    
         <div class="g-signin2" data-onsuccess="onSignIn"> </div>
-        
-        <h2>no tienes cuenta? hacete una!</h2>
+        -->
+        <h2>¿No tenes cuenta? ¡Hacete una!</h2>
         <form id="newResearcher">
             <label for="">Nombre</label>
             <input type="text" min="3" max="50" required name="name">
@@ -58,6 +59,7 @@
             <input type="password" min="8" max="50" required name="pass2">
             <p class="boton verde" id="register_button"> Registrarse </p>
         </form>
+        <div id="errorRegistro" class="msjErrores"></div>
     </section>
 </body>
 </html>
