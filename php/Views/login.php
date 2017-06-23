@@ -22,7 +22,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
-    <section>
+    <section id="seccionLogin">
     <!-- MOSTRAR MSJ DE ERRORES PARA USUARIO Y CONTRASEÑA CUANDO LE PIFIAN-->
         <img src="../../images/icono.png" alt="Logo UNLu" >
         <h1>Iniciar Sesión</h1>
