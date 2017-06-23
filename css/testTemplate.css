@@ -4,6 +4,8 @@
     border: 1px solid black;
     width: 80%;
     margin: auto;
+    background-color: beige;
+    margin-bottom: 1%;
 }
 
 #plateHead{
@@ -55,4 +57,26 @@
 }
 
 /*               OTRAS SECCIONES                                 */
+#stepsTable{
+    border-collapse: collapse; /* Collapse borders */
+    background-color: white;
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 12px; /* Increase font-size */  
+    margin-left: 1.5%;
+    width: 98%;
+}
+#stepsTable th, #stepsTable td{
+    text-align: left; /* Left-align text */
+    padding: 10px; /* Add padding */    
+}
 
+#stepsTable tr{
+    border-bottom: 1px solid #ddd; 
+}
+
+#stepsTHead{
+    width: 80%;
+}
+#stepsTable tr.stepsTHead, #stepsTable tr:hover{
+    background-color: #f1f1f1;
+}

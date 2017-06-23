@@ -29,6 +29,7 @@
         <form action="" id="stepsForm">
         <br>
             <p id="stepsFormTitle"><strong>Nuevo Paso</strong></p>
+            <br>
             <!--  pense q iban pero los agrege de mas
             <label for="">Nombre:</label>
             <input type="text" id="stepsNewName" placeholder="Nombre del paso" name="stepsNewName">
@@ -37,8 +38,8 @@
             <input type="text" id="stepsNewDescr" placeholder="Descripcion del paso" name="stepsNewDescr">
             <label for="">Tipo de paso:</label>
             <input type="radio" name="stepsNewType" value="well" id="checkWell"> wells
-            <input type="radio" name="stepsNewType" value="plate" checked> plaqueta
-            <input type="number" id="stepsNewTime" name="stepsNewTime">
+            <input type="radio" name="stepsNewType" value="plate"> plaqueta
+            <!--<input type="number" id="stepsNewTime" name="stepsNewTime">-->
             <p id="stepsNewButton" class="button-green" onclick="controlador.newStep()">Crear Paso</p>
             <div class="errores" id="stepsNewError">
                 
@@ -47,7 +48,7 @@
        
        <!-- LOS PASOS -->
        <table id="stepsTable">
-           <tr id="stepsTHead">
+           <tr class="stepsTHead">
                <th>Select</th>
                <th style="display: none;">ID</th>
                <th>Descripcion</th>
@@ -60,7 +61,7 @@
                 <td>stepPlate.name</td>
                 <td>stepPlate.description</td>
                 <td>stepPlate.type</td>
-                <td><input type="number" min="1"></td>
+                <td><input type="number" id="pp" min="1"></td>
                 <td> x </td>
             {% endfor %}
            
@@ -91,6 +92,5 @@
                 </tr>
             {% endfor %}
         </table>
-    </section>
-            
+    </section>            
 {% endblock %}
