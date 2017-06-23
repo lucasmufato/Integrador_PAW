@@ -104,4 +104,25 @@ TestControler = function(){
         $('#stepsTable tr:last').after("<tr>"+select+id+desc+type+order+x+"</tr>");
     }
     
+    //funcion de prueba q cambia el color de los wells
+    this.clickCircle = function(letra,nro){
+        console.log("hiciste click en "+letra+nro);
+        //van a haber 3 tipos de clases, "clicked", "unclicked" y "none"
+        var celda = $("#cell"+letra+nro+" div");    //agarro el div dentro de esa celda
+        if(celda.hasClass("unclicked")){
+            celda.removeClass("unclicked");
+            celda.addClass("clicked");
+        }else{
+            if(celda.hasClass("none")){
+                celda.removeClass("none");
+                celda.addClass("unclicked");
+            }else{
+                celda.removeClass("clicked");
+                celda.addClass("none");
+            }
+        }
+        
+        
+    }
+    
 }//fin de la clase TestControler

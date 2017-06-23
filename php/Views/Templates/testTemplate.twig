@@ -5,6 +5,8 @@
 {% block head %}
     {{ parent() }}
     <link rel="stylesheet" href="../../css/indexTemplate.css" />
+    <link rel="stylesheet" href="../../css/baseTemplate.css" />
+    <link rel="stylesheet" href="../../css/testTemplate.css" />
     <script src="../../js/index.js"></script>
     <script src="../../js/modelo.js"></script>
     <script src="../../js/testControler.js"></script>
@@ -67,7 +69,28 @@
        
    </section>
     <section id="sectionPlate">
-        <h2>aca iria la plaqueta con los wells</h2>
+        <table id="plateTable">
+            <thead id="plateHead">
+            <tr id="plateHeadRow">
+            <th class="tableHeadColumn "></th>
+            {% for nro in nros %}
+                <th class="tableHeadColumn " >{{nro}}</th>
+            {% endfor %}
+            </tr>
+            </thead>
+            {% for letra in letras %}
+                <tr class="plateRow">
+                <td class="plateLetterCell ">
+                    {{letra}}
+                </td>
+                {% for nro in nros %}
+                    <td class="plateCell" id="cell{{letra}}{{nro}}">
+                        <div class="circulo none" onclick="controlador.clickCircle('{{letra}}','{{nro}}')" ></div>
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
     </section>
-
+            
 {% endblock %}
