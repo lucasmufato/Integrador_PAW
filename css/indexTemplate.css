@@ -17,7 +17,8 @@
 }
 
 body{
-//	background-image: url("../images/fondo_principal.jpg");
+ background-image: url("../images/loginfondo.jpg");
+
 	background-repeat: repeat;
 }
 
@@ -103,8 +104,9 @@ h1{
 
 #stepsNewTime{
     width: 20%;
+    display: none;
 }
 
 #checkWell:checked + #stepsNewTime{
-        display: none;
+        display: block;
 }
