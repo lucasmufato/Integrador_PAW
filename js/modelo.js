@@ -36,10 +36,10 @@ function Result(){
 
 function Step(){
     this.id;
-    this.name;  //este no iria
     this.description;
     this.order;
     this.type;
+    this.time;
     this.wells;
 }
 
