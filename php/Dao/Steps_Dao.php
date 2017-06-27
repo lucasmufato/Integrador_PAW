@@ -15,9 +15,11 @@ class StepsDao{
 
     //recibe un objeto step, lo persiste en la BD y lo devuelve, si hay error devuelve []Strings
     public function NewStep($step){
-        $query = $this->connection->prepare("INSERT INTO step(description, id_status)VALUES (?, ?);" );
+        $query = $this->connection->prepare("INSERT INTO step(description, id_status,amount,type)VALUES (?, ?, ?, ?);" );
         $query->bindParam(1, $step->description);
         $query->bindParam(2, $step->status);
+        $query->bindParam(3, $step->amount);
+        $query->bindParam(4, $step->type);
         $query->execute();
         $step->id = $this->connection->lastInsertId();
         return $step;
@@ -34,7 +36,7 @@ class StepsDao{
     
     //funcion que devuelve un arreglo con los steps de un plate
     public function getStepsFromPlate($plateId){
-        $query = $this->connection->prepare("select s.id_step, s.description, s.id_status, sp.ordina from step s inner join step_plaque sp on s.id_step = sp.id_step inner join plaque p on p.id_plaque = sp.id_plaque where p.id_plaque = :plateID ;" );
+        $query = $this->connection->prepare("select s.id_step, s.description, s.id_status, sp.ordina, s.amount, s.type from step s inner join step_plaque sp on s.id_step = sp.id_step inner join plaque p on p.id_plaque = sp.id_plaque where p.id_plaque = :plateID ;" );
         $query->bindParam("plateID", $plateId);
         $query->execute();
         $resultado = $query->fetchAll();
@@ -45,8 +47,10 @@ class StepsDao{
             $d = $tupla["description"];
             $s = $tupla["id_status"];
             $o = $tupla["ordina"];
+            $a = $tupla["amount"];
+            $t = $tupla["type"];
             //pongo la tupla en un arreglo
-            $r = array("id"=>$id,"descr"=>$d,"status"=>$s,"ordinal"=>$o,"wells"=>null);
+            $r = array("id" => $id, "descr" => $d, "status" => $s, "ordinal" => $o, "amount" => $a, "type" => $t, "wells" => null );
             //agrego el arreglo al arreglo de respuesta (INCEPTION!)
             $rta[] = $r;
         }

@@ -24,7 +24,6 @@ TestControler = function(){
     }
     
     this.prepare = function(){
-        console.log("por cargar los pasos");
         this.cargarPasosAjax();
         //en base al estado del test son las cosas que se pueden hacer
         switch(this.test.result){
@@ -56,6 +55,12 @@ TestControler = function(){
         var paso = new Step();
         paso.description = $("#stepsNewDescr").val().trim();
         paso.type = $('input[name=stepsNewType]:checked', '#stepsForm').val();
+        if(paso.type == "well"){
+            paso.type = 0;
+        }else{
+            paso.type = 1;
+        }
+        paso.amount = $("#stepsNewAmount").val().trim();
         paso.order = this.ultimoPaso;
         this.ultimoPaso++;
         
@@ -71,7 +76,8 @@ TestControler = function(){
             idTest : this.test.id,
             description : paso.description,
             type : paso.type,
-            order : paso.order
+            order : paso.order,
+            amount : paso.amount
         }
         var funcion = function(data,status){
            if(status !== "success"){
@@ -161,13 +167,14 @@ TestControler = function(){
         step.id = ajaxStep.id;
         step.description = ajaxStep.descr;
         step.order = ajaxStep.ordinal;
-        if(ajaxStep.type == undefined){
-            step.type = "plate";
+        if(ajaxStep.type == 0){
+            step.type = "well";
         }else{
-            step.type = ajaxStep.type;
+            step.type = "plate";
         }
+        
         step.status = ajaxStep.status;
-        step.time = ajaxStep.time;
+        step.amount = ajaxStep.amount;
         step.wells = ajaxStep.wells;
         return step;
     }
