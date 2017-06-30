@@ -36,7 +36,7 @@
             <label for=""><strong>Descripción:</strong></label>
             <input type="text" id="stepsNewDescr" placeholder="Descripcion del paso" name="stepsNewDescr">
             <label for="">Tipo de paso:</label>
-            <input type="radio" name="stepsNewType" value="well" id="checkWell"> wells
+            <input type="radio" name="stepsNewType" value="well" id="checkWell" chequed> wells
             <input type="radio" name="stepsNewType" value="plate"> plaqueta
             <input type="number" id="stepsNewAmount" name="stepsNewTime">
             <p id="stepsNewButton" class="button-green" onclick="controlador.newStep()">Crear Paso</p>
@@ -54,16 +54,7 @@
                <th>Tipo</th>
                <th>Orden</th>
                <th>Eliminar</th>
-           </tr>
-           {% for stepPlate in stepsPlate %}
-                <td><input type="radio"></td>
-                <td>stepPlate.name</td>
-                <td>stepPlate.description</td>
-                <td>stepPlate.type</td>
-                <td><input type="number" id="pp" min="1"></td>
-                <td> x </td>
-            {% endfor %}
-           
+           </tr>           
            
        </table>
        

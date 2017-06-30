@@ -56,6 +56,13 @@
     background-color: white;
 }
 
+/* pasos seleccionados */
+.selectedStep{
+    background-color: antiquewhite;
+    border: 1px solid blue;
+}
+
+
 /*               OTRAS SECCIONES                                 */
 #stepsTable{
     border-collapse: collapse; /* Collapse borders */

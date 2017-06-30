@@ -14,7 +14,7 @@ function Test(){
 
 function Result(){
     this.creando = 1 ;
-    this.noIniciado = 2 ;
+    this.noIniciado = 2 ;   //es lo mismo q creando
     this.enTrabajo = 3 ;
     this.exitoso = 4 ;
     this.fallido = 5 ;
@@ -40,7 +40,7 @@ function Step(){
     this.order;
     this.type;
     this.time;
-    this.wells;
+    this.wells=[];
 }
 
 function Well(){

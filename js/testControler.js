@@ -10,9 +10,10 @@ $(document).ready(function(){
 
 TestControler = function(){
     this.url = "../Controlers/Test_Ajax_receiver.php";
-    this.ultimoPaso = 1;
-    this.test;
-    this.steps=[];
+    this.ultimoPaso = 1;    //nro de orden del ultimo paso
+    this.test;              //test actual
+    this.steps=[];          //arreglo con todos los pasos
+    this.stepSelected=null;      //ultimo paso seleccionado
     
     //funcion que obtiene los datos del test del DOM y crea el objeto test
     this.obtenerTest = function(){
@@ -88,8 +89,9 @@ TestControler = function(){
             data = JSON.parse(data);
             switch (data.status){
                 case "ok":
-                    paso.id=data.idPaso;
+                    paso.id=data.stepId;
                     controlador.showNewStep(paso);
+                    controlador.steps.push(paso);
                     break;
                 case "wrong":
                     $("#stepsNewError") = data.errores;
@@ -105,32 +107,98 @@ TestControler = function(){
     
     //metodo que agrega a la tabla el nuevo paso que recibio del servidor
     this.showNewStep = function(paso){
-        var select = '<td><input type="radio" name="selected" value="'+paso.id+'" onclick="controlador.selected()"></td>';
+        var select = '<td><input type="radio" name="selected" value="'+paso.id+'" onclick="controlador.selectStep('+paso.id+')"></td>';
         var id= '<td style="display: none"> '+paso.id+' </td>';
         var desc = '<td> '+paso.description+' </td>';
         var type = '<td> '+paso.type+' </td>';
         var order = '<td><input type="number" value="'+paso.order+'" onchange="controlador.changeorder()></td>';
         var x = '<td> <button onclick="controlador.delete()" >x</button></td>'
-        $('#stepsTable tr:last').after("<tr>"+select+id+desc+type+order+x+"</tr>");
+        $('#stepsTable tr:last').after("<tr id='step"+paso.id+"'>"+select+id+desc+type+order+x+"</tr>");
     }
     
     //funcion de prueba q cambia el color de los wells
     this.clickCircle = function(letra,nro){
-        console.log("hiciste click en "+letra+nro);
-        //van a haber 3 tipos de clases, "clicked", "unclicked" y "none"
-        var celda = $("#cell"+letra+nro+" div");    //agarro el div dentro de esa celda
-        if(celda.hasClass("unclicked")){
-            celda.removeClass("unclicked");
-            celda.addClass("clicked");
-        }else{
-            if(celda.hasClass("none")){
-                celda.removeClass("none");
-                celda.addClass("unclicked");
-            }else{
-                celda.removeClass("clicked");
-                celda.addClass("none");
+        var steps = $.grep(this.steps, function(e){ return e.id == controlador.stepSelected; });  //devuelve los steps con ese id
+        var wells = steps[0].wells;
+        var celda = $("#cell"+letra+nro+" div");
+        //si contenia a ese well
+        var estado=false;
+        //chequeo si esta 
+        var i=0;
+        for(i;i<wells.length;i++){
+            if( (wells[i].row == letra) && (wells[i].column == nro) ){
+                estado=true;
+                break;
             }
         }
+        
+        if( estado ){
+            //despinto
+            celda.removeClass("clicked");
+            celda.addClass("none");
+            //saco del arreglo. en realidad reemplazo el arreglo por otro q no contiene ese well
+            console.log("borrando: "+wells[i]);
+            //wells = wells.filter(function(w){w.row != letra && w.column != nro})
+            wells.splice(i,1);
+        }else{
+            //si NO lo contenia, ahora lo contiene
+            celda.addClass("clicked");
+            celda.removeClass("none");
+            var well = new Well();
+            well.row = letra;
+            well.column = nro;
+            wells.push(well);
+        }
+    }
+    
+    //funcion que se activa cuando se da click a un radio de seleccionar
+    this.selectStep = function(idPaso){
+        //si no habia step seleccionado lo selecciono
+        if( this.stepSelected == null){
+            this.stepSelected = idPaso;
+            $("#step"+idPaso).addClass("selectedStep");
+            this.showWellsForStep(idPaso);
+            return;
+        }
+        //si es el mismo que estaba seleccionado, limpio los wells y deselecciono
+        if( this.stepSelected == idPaso ){
+            $("#step"+idPaso).removeClass("selectedStep");
+            this.stepSelected = null;
+            this.clearWells();
+            return;
+        }
+        //si el seleccionado es uno distinto al anterior
+        //no es necesario el if, pero se entiende mas y es mas facil modificar
+        if( this.stepSelected != idPaso ){
+            $("#step"+this.stepSelected).removeClass("selectedStep");
+            this.clearWells();
+            this.stepSelected = idPaso;
+            $("#step"+idPaso).addClass("selectedStep");
+            this.showWellsForStep(idPaso);
+        }
+    }
+    
+    //funcion que limpia los wells 
+    this.clearWells = function(){
+        //saco todos las clases q le dan color, incluyendo none por las dudas
+        $(".circulo").removeClass("clicked");
+        $(".circulo").removeClass("none");
+        $(".circulo").removeClass("unclicked");
+        //y se la pongo a todos devuelta
+        $(".circulo").addClass("none");
+    }
+    
+    //funcion que dado el ID del paso, pinta todos los wells de ese paso
+    this.showWellsForStep = function(idPaso){
+        var steps = $.grep(this.steps, function(e){ return e.id == idPaso; });  //devuelve los steps con ese id
+        console.log("paso al step: "+steps[0].id);
+        var wells = steps[0].wells;
+        //por cada well en el paso que lo pinte
+        wells.forEach(function(well){
+            console.log("pinto:"+well);
+           $("#cell"+well.row+well.column+" div").addClass("clicked");
+            $("#cell"+well.row+well.column+" div").removeClass("none");
+        });
     }
     
     //metodo que pide todos los steps asociados a este test y plaqueta
@@ -155,7 +223,6 @@ TestControler = function(){
                     controlador.steps = controlador.steps.concat(step);
                     controlador.showNewStep(step);
                 }
-                //controlador.steps.forEach(,controlador);
             }
         }
         $.get(this.url,data,funcion);
@@ -175,7 +242,9 @@ TestControler = function(){
         
         step.status = ajaxStep.status;
         step.amount = ajaxStep.amount;
-        step.wells = ajaxStep.wells;
+        if(ajaxStep.wells != null){
+            step.wells = ajaxStep.wells;
+        }
         return step;
     }
     
