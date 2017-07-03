@@ -7,7 +7,7 @@ include_once("../Model/StepPlate.php");
 //esta clase se encarga de ABM de pasos y de ABM pasos-plaqueta, osea que pasos se realizan en q plaqueta
 class StepsDao{
     protected $connection = null;
-
+    
     public function __construct(){
     	$bd = new DataBase();
     	$this->connection = $bd->getConnection();
@@ -57,6 +57,73 @@ class StepsDao{
         return $rta;
     }
 
-
-
+    //metodo que se debe usar una sola vez para crear los wells en la BD
+    public function crearWells(){
+        echo "creando... </br>";
+        $letras = range('A','I');   //las letras son las filas
+        $nros = range(1,12);        //los nros son las columnas
+        foreach($letras as $letra){
+            foreach($nros as $nro){
+                $query = $this->connection->prepare("INSERT INTO well(fila, columna) VALUES (?, ?) ;" );
+                $query->bindParam(1, $letra);
+                $query->bindParam(2, $nro);
+                $query->execute();
+            }
+        }
+        echo "fin... </br>";
+    }
+    
+    //funcion q devuelve el id del well dado la fila y columna
+    public function getIdWell($wellRow,$wellCol){
+        $query = $this->connection->prepare("SELECT * FROM WELL WHERE fila = :fila AND columna = :col ;" );
+        $query->bindParam("fila", $wellRow);
+        $query->bindParam("col", $wellCol);
+        $query->execute();
+        $rta = $query->fetch();
+        //si explota devuelve false
+        if($rta === false){
+            return null;
+        }
+        
+        return $rta["id_well"];
+    }
+     /*
+    public function checkStepPlateWell($idPlate, $stepId, $wellId){
+        $query = $this->connection->prepare("SELECT * FROM step_in_plaque_well WHERE id_plaque = :plate AND id_well = :well AND id_step = :step ;" );
+        $query->bindParam("plate", $idPlate);
+        $query->bindParam("well", $wellId);
+        $query->bindParam("step", $stepId);
+        $query->execute();
+        $rta = $query->fetch(PDO::FETCH_ASSOC);
+        if(! $rta){
+            //no existe la relacion por q es un arreglo vacio
+            return false;
+        }
+        return true;
+    }
+    */
+    
+    //metodo que crea la relacion entre
+    public function saveStepPlateWell($idPlate,$stepId,$wellId,$amount){
+        $query = $this->connection->prepare("INSERT INTO step_in_plaque_well(id_step, id_plaque, id_well, id_status, quantity)VALUES (?, ?, ?, ?, ?);" );
+        $query->bindParam(1, $stepId);
+        $query->bindParam(2, $idPlate);
+        $query->bindParam(3, $wellId);
+        $status = 4;//Status::sinIniciar;
+        $query->bindParam(4, $status);
+        $query->bindParam(5, $amount);
+        $query->execute();
+        return true;
+    }
+    
+    public function removeStepPlateWell($idPlate,$stepId,$wellId){
+        $query = $this->connection->prepare("DELETE FROM step_in_plaque_well WHERE ID_STEP = :step AND ID_PLAQUE = :plate AND ID_WELL = :well ;" );
+        $query->bindParam("step", $stepId);
+        $query->bindParam("plate", $idPlate);
+        $query->bindParam("well", $wellId);
+        $query->execute();
+        return true;
+    }
+    
+    
 }//fin de la clase

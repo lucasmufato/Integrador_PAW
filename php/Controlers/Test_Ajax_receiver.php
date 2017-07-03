@@ -4,6 +4,7 @@ include_once("../Model/Step.php");
 include_once("../Model/StepPlate.php");
 include_once("../Dao/Steps_Dao.php");
 include_once("../Dao/Test_Dao.php");
+include_once("Test_Controler.php");
 
 //para seguridad habria que chequear que el usuario que pide el ajax ser el dueño del test correspondiente
 
@@ -24,7 +25,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         case "newStep":
             newStep();
             break;
-            
+        case "wellForStep":
+            wellForStep();
+            break;
         default:
             echo json_encode( array("status"=>"wrong","errores"=>"la accion deseada no se encontro") );
             break;
@@ -100,3 +103,58 @@ function getStepPlate(){
     $rta = array("status"=>"ok", "steps"=>$steps);
     echo json_encode($rta);
 }
+
+//funcion que se encarga de guarda que en un well se realiza un paso
+function wellForStep(){
+ 
+    if(! isset($_POST["idPlate"]) || $_POST["idPlate"]=="" ){
+        $GLOBALS["errores"][]="Falta el id del Test";
+    }
+    if(! isset($_POST["stepID"]) || $_POST["stepID"]=="" ){
+        $GLOBALS["errores"][]="Falta el paso";
+    }
+    if(! isset($_POST["wellRow"]) || $_POST["wellRow"]=="" ){
+        $GLOBALS["errores"][]="Falta la fila del well";
+    }
+    if(! isset($_POST["wellCol"]) || $_POST["wellCol"]=="" ){
+        $GLOBALS["errores"][]="Falta la columna del well";
+    }
+    if(! isset($_POST["event"]) || $_POST["event"]=="" ){
+        $GLOBALS["errores"][]="Falta el evento";
+    }
+    $amount=null;
+    if (isset($_POST["amount"])){
+        $amount = $_POST["amount"];
+    }
+    //si hay errores salgo
+    if( count( $GLOBALS["errores"] ) >0 ){
+        return;
+    }
+    $tc = new TestControler();
+    $evento = $_POST["event"];
+    switch($evento){
+        case "add":
+            $rta = $tc->addStep($_POST["idPlate"], $_POST["stepID"], $_POST["wellRow"], $_POST["wellCol"], $amount);
+            if($rta){
+                $rta = array("status"=>"ok");
+                echo json_encode($rta);
+                return;
+            }
+            $GLOBALS["errores"][]=$rta;
+            break;
+        case "remove":
+            $rta = $tc->removeStep($_POST["idPlate"], $_POST["stepID"], $_POST["wellRow"], $_POST["wellCol"]);
+            if($rta){
+                $rta = array("status"=>"ok");
+                echo json_encode($rta);
+                return;
+            }
+            $GLOBALS["errores"][]=$rta;
+            break;
+        default:
+            $GLOBALS["errores"][]="no existe el evento: $evento";
+            break;
+    }
+    
+   
+}//fin del metodo wellForStep

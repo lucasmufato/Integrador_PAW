@@ -32,6 +32,22 @@ class TestControler{
         echo json_encode($rta);
         return;
         
+    }//fin funcion crearTest()
+    
+    //metodo que crea una relacion entre el paso y el well de un plate
+    public function addStep($idPlate, $stepId, $wellRow, $wellCol, $amount){
+        $dao = new StepsDao();
+        $wellId = $dao->getIdWell($wellRow,$wellCol);
+        $rta = $dao->saveStepPlateWell($idPlate,$stepId,$wellId,$amount);
+        return $rta;
+    }//fin funcion addStep()
+    
+    //funcion que remueve una tupla de la tabla step_in_plate_well
+    public function removeStep($idPlate, $stepId, $wellRow, $wellCol){
+        $dao = new StepsDao();
+        $wellId = $dao->getIdWell($wellRow,$wellCol);
+        $rta = $dao->removeStepPlateWell($idPlate,$stepId,$wellId);
+        return $rta;
     }
     
 }//fin de la clase

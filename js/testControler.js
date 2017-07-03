@@ -116,7 +116,7 @@ TestControler = function(){
         $('#stepsTable tr:last').after("<tr id='step"+paso.id+"'>"+select+id+desc+type+order+x+"</tr>");
     }
     
-    //funcion de prueba q cambia el color de los wells
+    //funcion que recibe el click en la matriz, pinta el circulo y envia el ajax correspondiente
     this.clickCircle = function(letra,nro){
         var steps = $.grep(this.steps, function(e){ return e.id == controlador.stepSelected; });  //devuelve los steps con ese id
         var wells = steps[0].wells;
@@ -132,24 +132,78 @@ TestControler = function(){
             }
         }
         
+        //data para enviar al servidor
+         var data = {
+                action : "wellForStep",
+                idPlate : controlador.test.plates,
+                stepID : steps[0].id,
+                wellRow : letra,
+                wellCol : nro
+         }
+        
+        //funcion a ser llamada
+        var funcion;    
+        
         if( estado ){
-            //despinto
-            celda.removeClass("clicked");
-            celda.addClass("none");
-            //saco del arreglo. en realidad reemplazo el arreglo por otro q no contiene ese well
-            console.log("borrando: "+wells[i]);
-            //wells = wells.filter(function(w){w.row != letra && w.column != nro})
-            wells.splice(i,1);
+            
+            //dato que indica que se debe sacar el paso de ese well
+            data.event = "remove";
+            
+            //funcion que se ejecuta al salir bien este ajax
+            funcion = function(data,status){
+                if(status !== "success"){
+                    alert("No se pudo conectar con el servidor");
+                    return;
+                }
+                console.log(data);
+                data = JSON.parse(data);
+                if(data.status == "ok"){
+                    
+                    /*     ESTO SE COPIA Y PEGA     */
+                    //despinto
+                    celda.removeClass("clicked");
+                    celda.addClass("none");
+                    //saco del arreglo. en realidad reemplazo el arreglo por otro q no contiene ese well
+                    console.log("borrando: "+wells[i]);
+                    //wells = wells.filter(function(w){w.row != letra && w.column != nro})
+                    wells.splice(i,1);
+                    
+                }else{
+                    alert(data.errores);
+                }
+            }
         }else{
-            //si NO lo contenia, ahora lo contiene
-            celda.addClass("clicked");
-            celda.removeClass("none");
-            var well = new Well();
-            well.row = letra;
-            well.column = nro;
-            wells.push(well);
-        }
-    }
+            
+            //agrego al data la informacion necesaria
+            data.event = "add";
+            
+            funcion = function(data,status){
+                if(status !== "success"){
+                    alert("No se pudo conectar con el servidor");
+                    return;
+                }
+                console.log(data);
+                data = JSON.parse(data);
+                if(data.status == "ok"){
+                    
+                    /*     ESTO SE COPIA Y PEGA     */
+                //si NO lo contenia, ahora lo contiene
+                celda.addClass("clicked");
+                celda.removeClass("none");
+                var well = new Well();
+                well.row = letra;
+                well.column = nro;
+                wells.push(well);
+                    
+                }else{
+                    alert(data.errores);
+                }
+            }
+        }//fin del if-else
+    
+    $.post(this.url,data,funcion);
+        
+    }//fin del metodo
     
     //funcion que se activa cuando se da click a un radio de seleccionar
     this.selectStep = function(idPaso){
