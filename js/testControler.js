@@ -297,9 +297,26 @@ TestControler = function(){
         step.status = ajaxStep.status;
         step.amount = ajaxStep.amount;
         if(ajaxStep.wells != null){
-            step.wells = ajaxStep.wells;
+            //si tiene wells asociados
+            var i=0
+            for(i;i<ajaxStep.wells.length;i++){
+                //por cada well que recibo, lo envio a la funcion q lo parsea y devuelve un objeto well
+                //el cual despues agrego a la lista de wells
+                step.wells.push( this.createWell(ajaxStep.wells[i] ));
+            }
+            
         }
         return step;
+    }
+    
+    this.createWell = function(ajaxWell){
+        var well = new Well();
+        well.id = ajaxWell.id;
+        well.row = ajaxWell.fila;
+        well.column = ajaxWell.columna;
+        well.status = ajaxWell.status;
+        well.amount = ajaxWell.quantity;
+        return well;
     }
     
 }//fin de la clase TestControler

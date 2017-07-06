@@ -49,8 +49,9 @@ class StepsDao{
             $o = $tupla["ordina"];
             $a = $tupla["amount"];
             $t = $tupla["type"];
+            $wells = $this->getWellsForStepsPlate($plateId,$id);
             //pongo la tupla en un arreglo
-            $r = array("id" => $id, "descr" => $d, "status" => $s, "ordinal" => $o, "amount" => $a, "type" => $t, "wells" => null );
+            $r = array("id" => $id, "descr" => $d, "status" => $s, "ordinal" => $o, "amount" => $a, "type" => $t, "wells" => $wells );
             //agrego el arreglo al arreglo de respuesta (INCEPTION!)
             $rta[] = $r;
         }
@@ -103,7 +104,7 @@ class StepsDao{
     }
     */
     
-    //metodo que crea la relacion entre
+    //metodo que crea una tupla en la tabla step_in_plaque_well
     public function saveStepPlateWell($idPlate,$stepId,$wellId,$amount){
         $query = $this->connection->prepare("INSERT INTO step_in_plaque_well(id_step, id_plaque, id_well, id_status, quantity)VALUES (?, ?, ?, ?, ?);" );
         $query->bindParam(1, $stepId);
@@ -116,6 +117,7 @@ class StepsDao{
         return true;
     }
     
+    //metodo que borra una tupla en la tabla step_in_plaque_well
     public function removeStepPlateWell($idPlate,$stepId,$wellId){
         $query = $this->connection->prepare("DELETE FROM step_in_plaque_well WHERE ID_STEP = :step AND ID_PLAQUE = :plate AND ID_WELL = :well ;" );
         $query->bindParam("step", $stepId);
@@ -125,5 +127,26 @@ class StepsDao{
         return true;
     }
     
+    //metodo que un arreglo con las tuplas de la tabla step_in_plaque_well dado un Id de plate y un ID de step
+    public function getWellsForStepsPlate($plateID,$stepID){
+        $query = $this->connection->prepare("SELECT s.id_well, s.id_status, s.quantity, w.fila, w.columna FROM step_in_plaque_well s INNER JOIN well w ON s.id_well = w.id_well WHERE s.id_step = :step AND s.id_plaque = :plate ;" );
+        $query->bindParam("step", $stepID);
+        $query->bindParam("plate", $plateID);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        $rta=[];
+        //por cada tupla
+        foreach($resultado as $tupla){
+            $id = $tupla["id_well"];
+            $s = $tupla["id_status"];
+            $q = $tupla["quantity"];
+            $f = $tupla["fila"];
+            $c = $tupla["columna"];
+            //pongo la tupla en un arreglo
+            $r = array("id" => $id, "status" => $s, "quantity" => $q, "fila" => $f, "columna" => $c );
+            $rta[] = $r;
+        }
+        return $rta;
+    }
     
 }//fin de la clase

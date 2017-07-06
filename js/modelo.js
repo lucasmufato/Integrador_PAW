@@ -47,5 +47,7 @@ function Well(){
     this.id;
     this.row;
     this.column;
+    this.status;
+    this.amount;
 }
     
