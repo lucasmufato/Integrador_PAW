@@ -28,6 +28,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         case "wellForStep":
             wellForStep();
             break;
+        case "startTest":
+            startTest();
+            break;
+        case "endTest":
+            endTest();
+            break;
         default:
             echo json_encode( array("status"=>"wrong","errores"=>"la accion deseada no se encontro") );
             break;
@@ -155,6 +161,22 @@ function wellForStep(){
             $GLOBALS["errores"][]="no existe el evento: $evento";
             break;
     }
-    
    
 }//fin del metodo wellForStep
+
+//metodo que recibe el id de un test en "creando" y lo pasa a "en trabajo"
+function startTest(){
+    //TODO crear metodos
+    $testControler = new TestControler();
+    //$testControler->startTest();
+    $rta = array("status"=>"ok");
+    echo json_encode($rta);
+}
+
+//metodo que recibe id de un test "en trabajo " y lo pasa a "finalizado".
+function endTest(){
+    $testControler = new TestControler();
+    //$testControler->endTest();
+    $rta = array("status"=>"ok");
+    echo json_encode($rta);
+}

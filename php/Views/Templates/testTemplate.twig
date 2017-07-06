@@ -10,14 +10,37 @@
     <script src="../../js/testControler.js"></script>
 {% endblock %}
 {% block content %}
+  
+  {% if test.result != 1 %}
+  <!-- 1=creando.
+          solo se pueden mostrar los datos -->
    <section id="datosTest">
        <p id="testName"><strong>Nombre:</strong> {{ test.name }}</p>
        <p id="testId" style="display: none"><strong></strong>{{ test.id }}</p>
        <p id="testsPlatesId" style="display: none"> {{ plate }} </p>
        <p id="testDescription"><strong>Descripción:</strong> {{ test.description }} </p>
        <p id="testResult"><strong>Resultado:</strong> {{ test.resultAsString() }} </p>
+       {% if test.resultDescription != null %}
+       <p id="testResultDescription"><strong>Descripcion del resultado:</strong>
+        {{ test.resultDescription }} </p>
+        {% endif %}
        <!-- IRIAN MAS DATOS -->
-       
+   </section>
+   {% else %}
+   <!-- si el test esta en creacion se puede modificar los datos del test y agregar y eliminar pasos -->
+   <section id="datosTest">
+        <label for="testName">Nombre:</label>
+        <input type="text" id="testName" value="{{ test.name }}">
+        <p id="testId" style="display: none">{{ test.id }}</p>
+        <p id="testsPlatesId" style="display: none"> {{ plate }} </p>
+        <label for="testDescription">Descripción:</label>
+        <input type="text" id="testDescription" value="{{ test.description }}">
+        <p id="testResult"><strong>Resultado:</strong> {{ test.resultAsString() }} </p>
+        <!-- IRIAN MAS DATOS -->
+        <p class="button-green">Modificar!</p>
+        <div class="errores" id="modifyTestError">
+                
+        </div>
    </section>
    
    <section id="sectionSteps">
@@ -32,7 +55,7 @@
             <label for=""><strong>Descripción:</strong></label>
             <input type="text" id="stepsNewDescr" placeholder="Descripcion del paso" name="stepsNewDescr">
             <label for="">Tipo de paso:</label>
-            <input type="radio" name="stepsNewType" value="well" id="checkWell" chequed> wells
+            <input type="radio" name="stepsNewType" value="well" id="checkWell" checked="true"> wells
             <input type="radio" name="stepsNewType" value="plate"> plaqueta
             <input type="number" id="stepsNewAmount" name="stepsNewTime">
             <p id="stepsNewButton" class="button-green" onclick="controlador.newStep()">Crear Paso</p>
@@ -40,7 +63,7 @@
                 
             </div>
         </form>
-       
+    {% endif %}
        <!-- LOS PASOS -->
        <table id="stepsTable">
            <tr class="stepsTHead">
@@ -78,5 +101,22 @@
                 </tr>
             {% endfor %}
         </table>
-    </section>            
+    </section>
+    <section id="finTest">
+    {%  if test.result == 1  %}
+    <!-- 1=creando -->
+    <p>
+        Ya terminaste de preparar el test? hace click en el boton de abajo para empesarlo!
+        <br>
+        <span>Una vez que comienses el test no vas a poder modificar mas los datos del mismo ni sus pasos</span>
+    </p>
+    <p class="button-green" onclick="controlador.terminarCrear()">Comenzar el Test!</p>
+    {% elseif test.result == 3 %}
+    <!-- 3=en trabajo -->
+    <p class="button-green" onclick="controlador.finalizarTest()">Finalizar Test!</p>
+    {% else %}
+    <p>El test ya fue completado</p>
+    {% endif %}
+    <div id="endTestErrors" class="errores"></div>
+    </section>
 {% endblock %}

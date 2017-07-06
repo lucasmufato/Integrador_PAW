@@ -309,6 +309,7 @@ TestControler = function(){
         return step;
     }
     
+    //creo un objeto well atraves del ajax recibido
     this.createWell = function(ajaxWell){
         var well = new Well();
         well.id = ajaxWell.id;
@@ -317,6 +318,70 @@ TestControler = function(){
         well.status = ajaxWell.status;
         well.amount = ajaxWell.quantity;
         return well;
+    }
+    
+    //funcion que envia un ajax pidiendo en cambio de estado del test, si es aceptado recarga la pagina, sino muestra el error.
+    this.terminarCrear = function(){
+        var data = {
+            action : "startTest",
+            idTest : this.test.id
+        }
+        
+        var funcion = function(data,status){
+            if(status !== "success"){
+                alert("No se pudo conectar con el servidor");
+                return;
+            }
+            console.log(data);
+            data = JSON.parse(data);
+            if(data.status == "ok"){
+                //si salio bien recargo la pagina, pidiendosela al servidor devuelta
+                location.reload(true);
+            }else{
+                //si tiro errores los imprimo donde corresponde
+                controlador.printErrors("#endTestErrors",data.errores);
+            }
+        }
+        $.post(this.url,data,funcion);
+        
+    }
+    
+    this.finalizarTest = function(){
+        var data = {
+            action : "endTest",
+            idTest : this.test.id
+        }
+        
+        var funcion = function(data,status){
+            if(status !== "success"){
+                alert("No se pudo conectar con el servidor");
+                return;
+            }
+            console.log(data);
+            data = JSON.parse(data);
+            if(data.status == "ok"){
+                //si salio bien pido el resultado del test
+                controlador.pedirResultado();
+            }else{
+                //si tiro errores los imprimo donde corresponde
+                controlador.printErrors("#endTestErrors",data.errores);
+            }
+        }
+        $.post(this.url,data,funcion);
+    }
+    
+    this.pedirResultado = function(){
+        alert("pediria los resultado TODO");
+    }
+    
+    //funcion general que recibe un selector de conetenedor, lo limpia y despues carga los errores que recibe como lista en el segundo paramentro.
+    this.printErrors = function(selector, errorList){
+        var conteiner = $(selector);
+        conteiner.text("");
+        var i=0;
+        for(i;i<errorList.length;i++){
+            conteiner.append("<p class='error'>"+errorList[i]+"<p>")
+        }
     }
     
 }//fin de la clase TestControler
